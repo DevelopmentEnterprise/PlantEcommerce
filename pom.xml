@@ -8,11 +8,11 @@
 		<version>2.3.0.RELEASE</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.ServiceStore</groupId>
-	<artifactId>ServiceStore</artifactId>
+	<groupId>com.WebMall</groupId>
+	<artifactId>WebMall</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ServiceStore</name>
-	<description>Demo project for Spring Boot</description>
+	<name>PlantEcommerce</name>
+	<description></description>
 
 	<properties>
 		<java.version>11</java.version>

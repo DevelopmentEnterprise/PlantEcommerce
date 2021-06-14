@@ -10,11 +10,22 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 45)
     private String firstName;
+
+    @Column(length = 45)
     private String lastName;
+
+    @Column(length = 50)
     private String email;
+
+    @Column(length = 20)
     private String tel;
+
+    @Column(length = 15)
     private String country;
+
+    @Column(length = 20)
     private String city;
 
     private String password;
@@ -25,12 +36,14 @@ public class User {
     @ManyToMany
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "user")
+    private List<Order> orders;
+
+    @OneToOne(mappedBy = "user")
+    private Store store;
+
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getFirstName() {
@@ -103,5 +116,13 @@ public class User {
 
     public void setCity(String city) {
         this.city = city;
+    }
+
+    public List<Order> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 }

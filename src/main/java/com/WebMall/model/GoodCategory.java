@@ -2,19 +2,19 @@ package com.WebMall.model;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 
 @Entity
-@Table(name = "roles")
-public class Role {
+@Table(name = "goodcategories")
+public class GoodCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 45)
     private String name;
 
-    @ManyToMany(mappedBy = "roles")
-    private List<User> users;
+    @ManyToMany
+    private List<Good> goods;
 
     public Long getId() {
         return id;
@@ -28,11 +28,11 @@ public class Role {
         this.name = name;
     }
 
-    public List<User> getUsers() {
-        return users;
+    public List<Good> getGoods() {
+        return goods;
     }
 
-    public void setUsers(List<User> users) {
-        this.users = users;
+    public void setGoods(List<Good> goods) {
+        this.goods = goods;
     }
 }

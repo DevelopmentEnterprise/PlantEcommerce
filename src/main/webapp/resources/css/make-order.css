@@ -1,0 +1,21 @@
+.side-menu {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  width: 100%;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.side-menu__item {
+  cursor: pointer;
+  font-size: 18px;
+  margin-bottom: 5px;
+  -webkit-transition: 0.4s ease-in-out;
+  transition: 0.4s ease-in-out;
+  position: relative;
+}
+/*# sourceMappingURL=make-order.css.map */

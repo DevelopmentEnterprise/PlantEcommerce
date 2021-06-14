@@ -1,4 +1,4 @@
-package com.WebMall.validator;
+package com.WebMall.validation;
 
 import com.WebMall.model.User;
 import com.WebMall.service.UserService;
