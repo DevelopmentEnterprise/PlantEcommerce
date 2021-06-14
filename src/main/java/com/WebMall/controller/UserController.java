@@ -23,13 +23,13 @@ public class UserController {
     @Autowired
     private UserValidator userValidator;
 
-    @GetMapping("/registration")
+    @GetMapping("/register")
     public String registration(Model model) {
         model.addAttribute("userForm", new User());
         return "registration";
     }
 
-    @PostMapping("/registration")
+    @PostMapping("/register")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
         userValidator.validate(userForm, bindingResult);
 
@@ -38,25 +38,18 @@ public class UserController {
         }
 
         userService.save(userForm);
-
         securityService.autoLogin(userForm.getFirstName(), userForm.getPasswordConfirm());
-
-        return "redirect:/welcome";
+        return "redirect:/";
     }
 
     @GetMapping("/login")
-    public String login(Model model, String error, String logout) {
-        if (error != null)
-            model.addAttribute("error", "Your username and password is invalid.");
-
-        if (logout != null)
-            model.addAttribute("message", "You have been logged out successfully.");
-
+    public String login(Model model) {
+        model.addAttribute("login", new LoginUser());
         return "login";
     }
 
-    @GetMapping({"/welcome"})
-    public String welcome(Model model) {
-        return "welcome";
+    @GetMapping("/logout")
+    public String logout(){
+        return "logout";
     }
 }
