@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,9 +13,11 @@ public class Review {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(length = 250)
     private String text;
 
+    @NotNull
     private Byte mark;
 
     @ManyToOne

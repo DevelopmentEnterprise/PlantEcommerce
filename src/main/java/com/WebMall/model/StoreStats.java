@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,6 +12,7 @@ public class StoreStats {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     private Integer profit;
 
     private Integer goodsSold;

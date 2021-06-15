@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,6 +19,7 @@ public class User {
     private String lastName;
 
     @Column(length = 50)
+    @NotNull
     private String email;
 
     @Column(length = 20)
@@ -28,6 +31,7 @@ public class User {
     @Column(length = 20)
     private String city;
 
+    @NotNull
     private String password;
 
     @Transient

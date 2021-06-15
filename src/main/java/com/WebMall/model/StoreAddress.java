@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -10,9 +12,11 @@ public class StoreAddress {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(length = 20)
     private String city;
 
+    @NotNull
     @Column(length = 45)
     private String street;
 

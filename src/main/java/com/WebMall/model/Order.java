@@ -1,9 +1,8 @@
 package com.WebMall.model;
 
 import com.WebMall.model.enums.DeliveryType;
-import com.WebMall.model.enums.OrderType;
 import com.WebMall.model.enums.Status;
-import org.springframework.lang.NonNull;
+import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -17,17 +16,18 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NonNull
+//    @NotNull
 //    private OrderType orderType;
 
-    @NonNull
+    @NotNull
     private Status status;
 
+    @NotNull
     private Date orderDate;
 
     private Integer sum;
 
-    @NonNull
+    @NotNull
     private DeliveryType deliveryType;
 
     @ManyToOne
@@ -45,12 +45,12 @@ public class Order {
         return id;
     }
 
-    @NonNull
+    @NotNull
     public Status getStatus() {
         return status;
     }
 
-    public void setStatus(@NonNull Status status) {
+    public void setStatus(@NotNull Status status) {
         this.status = status;
     }
 
@@ -70,12 +70,12 @@ public class Order {
         this.sum = sum;
     }
 
-    @NonNull
+    @NotNull
     public DeliveryType getDeliveryType() {
         return deliveryType;
     }
 
-    public void setDeliveryType(@NonNull DeliveryType deliveryType) {
+    public void setDeliveryType(@NotNull DeliveryType deliveryType) {
         this.deliveryType = deliveryType;
     }
 

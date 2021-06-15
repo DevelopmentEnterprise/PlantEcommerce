@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,6 +14,7 @@ public class Store {
     private Long id;
 
     @Column(length = 45)
+    @NotNull
     private String name;
 
     private Float rating;

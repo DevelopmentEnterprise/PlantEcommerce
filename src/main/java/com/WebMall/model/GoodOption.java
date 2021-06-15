@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,8 +13,10 @@ public class GoodOption {
     private Long id;
 
     @Column(length = 20)
+    @NotNull
     private String name;
 
+    @NotNull
     private Integer price;
 
     @ManyToOne

@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.sun.istack.NotNull;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -12,13 +14,16 @@ public class Good {
     private Long id;
 
     @Column(length = 80)
+    @NotNull
     private String name;
 
     @Column(length = 200)
+    @NotNull
     private String description;
 
     private Byte discount;
 
+    @NotNull
     private Boolean isOnSale;
 
     private Integer ordersCount;
@@ -26,6 +31,10 @@ public class Good {
     private Integer wishesCount;
 
     private Integer cartCount;
+
+    private Float rating;
+
+    private Integer price;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
@@ -39,6 +48,9 @@ public class Good {
 
     @ManyToMany
     private List<GoodCategory> goodCategories;
+
+    @OneToMany(mappedBy = "good")
+    private List<GoodImage> goodImages;
 
     public Long getId() {
         return id;
@@ -100,6 +112,22 @@ public class Good {
         this.cartCount = cartCount;
     }
 
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
+
     public Store getStore() {
         return store;
     }
@@ -130,5 +158,13 @@ public class Good {
 
     public void setGoodCategories(List<GoodCategory> goodCategories) {
         this.goodCategories = goodCategories;
+    }
+
+    public List<GoodImage> getGoodImages() {
+        return goodImages;
+    }
+
+    public void setGoodImages(List<GoodImage> goodImages) {
+        this.goodImages = goodImages;
     }
 }

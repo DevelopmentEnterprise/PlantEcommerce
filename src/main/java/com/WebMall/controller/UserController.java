@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Controller
 public class UserController {
     @Autowired
@@ -35,15 +37,19 @@ public class UserController {
      * Registration page with data handling
      */
     @PostMapping("/register")
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult) {
+    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult,
+                               HttpServletRequest request) {
         userValidator.validate(userForm, bindingResult);
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
+        String password = userForm.getPassword();
+
         userService.save(userForm);
-        securityService.autoLogin(userForm.getFirstName(), userForm.getPasswordConfirm());
+
+        securityService.autoLogin(userForm.getEmail(), password, request);
         return "redirect:/";
     }
 
