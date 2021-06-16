@@ -1,7 +1,7 @@
 package com.WebMall.validation;
 
 import com.WebMall.model.User;
-import com.WebMall.service.UserService;
+import com.WebMall.service.userServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

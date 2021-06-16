@@ -1,4 +1,4 @@
-package com.WebMall.service;
+package com.WebMall.service.userServices;
 
 import com.WebMall.model.User;
 import com.WebMall.repository.RoleRepository;

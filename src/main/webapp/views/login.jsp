@@ -58,7 +58,7 @@
               </form:form>
 
               <p style="margin-top: 15px; font-size: 14px; word-wrap: break-word;">Продолжая, вы соглашаетесь с правилами использования сервиса</p>
-              <div style="margin-top: 45px;">Уже зарегистрированы? <a href="" style="color: blue;">Войти</a></div>
+              <div style="margin-top: 45px;">Первый раз на сайте? <a href="/register" style="color: blue;">Создайте аккаунт</a></div>
           </div>
       </main>
 

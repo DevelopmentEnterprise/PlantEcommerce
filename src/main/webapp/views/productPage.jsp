@@ -1,13 +1,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Название</title>
+    <title>Main page</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <link rel="stylesheet" href="/resources/css/main.css" />
-</head>
+    <link rel="stylesheet" href="/resources/css/category-page.css"></head>
 <body>
     <header class="page-component">
         <div class="pc-type">
@@ -237,201 +239,85 @@
     </div>
 
     <main class="page-component">
-        <div class="main-slider">
-            <!-- TODO: Написать крутой слайдер -->
+        <div class="bread-crumbs content-section">
+            <a href="/" class="bread-crumbs__item">Главная</a>
+            <a href="" class="bread-crumbs__item">Детям</a>
+            <a href="" class="bread-crumbs__item">Детская одежда</a>
         </div>
 
-        <!-- Block of discounts and special offers -->
-        <div class="spec-offers content-section">
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
+        <div class="catalog-title-wrap">
+            <h1>${categoryUI}</h1>
+            <div class="goods-category-count">1603 товара</div>
         </div>
 
-        <!-- Block of discounts -->
-        <div class="good-discounts content-section">
-            <div class="sector-header">
-                <a href="/goods?categoryName=discount">Товары с нереальной скидкой!</a>
-            </div>
-            <div class="goods-list">
-                <c:forEach var="good" items="${goodsDiscount}">
-                    <div class="good-card" data="${good.getId()}">
-                        <div class="good-card__to-bookmarks"></div>
+        <div class="catalog content-section">
+            <!-- <div class="catalog-sidebar">
+                Здесь размещать фильтры
+            </div> -->
 
-                        <div class="good-card__img">
-                            <img src="${good.getGoodImages().get(0).getImageSrc()}" alt="">
-                        </div>
+            <div class="catalog-content">
+                <div class="catalog-sorter">
+                    <span style="color: #a7a7a7; margin-right: 20px;">Сортировать по:</span>
+                    <a href="/goods?categoryName=${categoryName}&sortBy=popularity" class="sort-item sort-item-active">Популярности</a>
+                    <a href="/goods?categoryName=${categoryName}&sortBy=name" class="sort-item">Названию</a>
+                    <a href="/goods?categoryName=${categoryName}&sortBy=rating" class="sort-item">Рейтингу</a>
+                    <a href="/goods?categoryName=${categoryName}&sortBy=price" class="sort-item">Цене</a>
+                    <a href="/goods?categoryName=${categoryName}&sortBy=discount" class="sort-item">Скидке</a>
+                </div>
 
-                        <div class="good-card__price">
-                            <div class="good-price">${good.getPrice()} <span>руб.</span></div>
-                            <div class="good-discount-price">
-                                ${ Math.round(good.getPrice() / (1 - (good.getDiscount()/100)))} <span>руб.</span>
+                <div class="goods-list content-section">
+                    <c:forEach var="good" items="${goodsToShow}">
+                        <div class="good-card" data="${good.getId()}">
+                            <div class="good-card__to-bookmarks"></div>
+
+                            <div class="good-card__img">
+                                <img src="${good.getGoodImages().get(0).getImageSrc()}" alt="">
                             </div>
-                            <div class="discount-percent">-${good.getDiscount()}%</div>
+
+                            <div class="good-card__price">
+                                <div class="good-price">${good.getPrice()} <span>руб.</span></div>
+                                <c:if test="${good.getDiscount() != null}">
+                                    <div class="good-discount-price">
+                                            ${Math.round(good.getPrice() / (1 - (good.getDiscount()/100)))} <span>руб.</span>
+                                    </div>
+                                    <div class="discount-percent">-${good.getDiscount()}%</div>
+                                </c:if>
+                            </div>
+
+                            <div class="good-card__description">
+                                    ${good.getDescription()}
+                            </div>
+
+                            <div class="good-card__rating">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="196" height="16" viewBox="0 0 196 16" fill="none">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
+                                    <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M108.331 1.2306L110.112 5.6504L114.671 6.06111C114.987 6.08975 115.116 6.50347 114.876 6.72126L111.418 9.86297L112.454 14.5367C112.526 14.8615 112.19 15.117 111.918 14.9444L108 12.4666L104.082 14.9444C103.81 15.1162 103.475 14.8608 103.547 14.5367L104.583 9.86297L101.125 6.7205C100.885 6.50271 101.012 6.08899 101.329 6.06036L105.888 5.64965L107.669 1.2306C107.793 0.923134 108.207 0.923134 108.331 1.2306Z" stroke="#CB11AB"/> -->
+                                </svg>
+                            </div>
+
+                            <div class="good-card-hover hide">
+                                <div class="add-to-cart-btn">В корзину</div>
+                            </div>
                         </div>
+                    </c:forEach>
+                </div>
 
-                        <div class="good-card__description">
-                            ${good.getDescription()}
+                <div class="pager-bottom" style="margin-top: 80px;">
+                    <c:forEach begin="1" end="${pagersCount}" varStatus="loop">
+                        <div class="${loop.index == 1 ? "pagination-item-active" : "pagination-item"}">
+                                ${loop.index}
                         </div>
-
-                        <div class="good-card__rating">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="196" height="16" viewBox="0 0 196 16" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M108.331 1.2306L110.112 5.6504L114.671 6.06111C114.987 6.08975 115.116 6.50347 114.876 6.72126L111.418 9.86297L112.454 14.5367C112.526 14.8615 112.19 15.117 111.918 14.9444L108 12.4666L104.082 14.9444C103.81 15.1162 103.475 14.8608 103.547 14.5367L104.583 9.86297L101.125 6.7205C100.885 6.50271 101.012 6.08899 101.329 6.06036L105.888 5.64965L107.669 1.2306C107.793 0.923134 108.207 0.923134 108.331 1.2306Z" stroke="#CB11AB"/> -->
-                            </svg>
-                        </div>
-
-                        <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn">В корзину</div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-
-            <div class="trigger-btn-large-cont" style="margin-top: 80px;">
-                <a href="/goods?categoryName=discount" class="view-more-btn trigger-btn-large">
-                    Показать еще
-                </a>
-            </div>
-        </div>
-
-        <!-- Hits of sales -->
-        <div class="good-hits content-section">
-            <div class="sector-header">
-                <a href="/goods?categoryName=hits">Хиты продаж</a>
-            </div>
-            <div class="goods-list">
-                <c:forEach var="good" items="${goodsHits}">
-                    <div class="good-card" data="${good.getId()}">
-                        <div class="good-card__to-bookmarks"></div>
-
-                        <div class="good-card__img">
-                            <img src="${good.getGoodImages().get(0).getImageSrc()}" alt="">
-                        </div>
-
-                        <div class="good-card__price">
-                            <div class="good-price">${good.getPrice()} <span>руб.</span></div>
-
-                            <c:if test="${good.getDiscount() != null}">
-                                <div class="good-discount-price">
-                                        ${ Math.round(good.getPrice() / (1 - (good.getDiscount()/100)))} <span>руб.</span>
-                                </div>
-                                <div class="discount-percent">-${good.getDiscount()}%</div>
-                            </c:if>
-
-                        </div>
-
-                        <div class="good-card__description">
-                                ${good.getDescription()}
-                        </div>
-
-                        <div class="good-card__rating">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="196" height="16" viewBox="0 0 196 16" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M108.331 1.2306L110.112 5.6504L114.671 6.06111C114.987 6.08975 115.116 6.50347 114.876 6.72126L111.418 9.86297L112.454 14.5367C112.526 14.8615 112.19 15.117 111.918 14.9444L108 12.4666L104.082 14.9444C103.81 15.1162 103.475 14.8608 103.547 14.5367L104.583 9.86297L101.125 6.7205C100.885 6.50271 101.012 6.08899 101.329 6.06036L105.888 5.64965L107.669 1.2306C107.793 0.923134 108.207 0.923134 108.331 1.2306Z" stroke="#CB11AB"/> -->
-                            </svg>
-                        </div>
-
-                        <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn">В корзину</div>
-                        </div>
-                    </div>
-                </c:forEach>
-            </div>
-        </div>
-
-        <!-- Block of recently viewes goods -->
-        <div class="recently-viewed content-section" style="margin-top: 70px">
-            <div class="sector-header">
-                <a href="">Вы смотрели</a>
-            </div>
-            <div class="goods-list">
-                <div class="good-card" data="${good.getId()}">
-                    <div class="good-card__to-bookmarks"></div>
-
-                    <div class="good-card__img">
-                        <img src="https://images.wbstatic.net/c246x328/new/25900000/25905681-1.jpg" alt="">
-                    </div>
-
-                    <div class="good-card__price">
-                        <div class="good-price">150 <span>руб.</span></div>
-                        <div class="good-discount-price">
-                            180 <span>руб.</span>
-                        </div>
-                        <div class="discount-percent">-17%</div>
-                    </div>
-
-                    <div class="good-card__description">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti hic molestiae rerum?
-                    </div>
-
-                    <div class="good-card__rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="196" height="16" viewBox="0 0 196 16" fill="none">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M108.331 1.2306L110.112 5.6504L114.671 6.06111C114.987 6.08975 115.116 6.50347 114.876 6.72126L111.418 9.86297L112.454 14.5367C112.526 14.8615 112.19 15.117 111.918 14.9444L108 12.4666L104.082 14.9444C103.81 15.1162 103.475 14.8608 103.547 14.5367L104.583 9.86297L101.125 6.7205C100.885 6.50271 101.012 6.08899 101.329 6.06036L105.888 5.64965L107.669 1.2306C107.793 0.923134 108.207 0.923134 108.331 1.2306Z" stroke="#CB11AB"/> -->
-                        </svg>
-                    </div>
-
-                    <div class="good-card-hover hide">
-                        <div class="add-to-cart-btn">В корзину</div>
+                    </c:forEach>
+                    <div class="pagination-item-text">Следующая страница
+                        <span style="margin-left: 10px;">></span>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Our advantages -->
-        <div class="advantages content-section" style="margin-top: 80px">
-            <div class="sector-header">
-                Широкий ассортимент и высокое качество
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Доставка и оплата без проблем
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Широкий ассортимент
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Выгодный шоппинг
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
         </div>
     </main>
 
@@ -525,7 +411,9 @@
             </div>
         </div>
     </footer>
-
-    <script src="/resources/js/visual.js"></script>
 </body>
+
+
+<!-- Connect js -->
+<script src="/resources/js/visual.js"></script>
 </html>

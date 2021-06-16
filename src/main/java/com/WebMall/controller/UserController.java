@@ -3,7 +3,7 @@ package com.WebMall.controller;
 import com.WebMall.model.LoginUser;
 import com.WebMall.model.User;
 import com.WebMall.service.SecurityService;
-import com.WebMall.service.UserService;
+import com.WebMall.service.userServices.UserService;
 import com.WebMall.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

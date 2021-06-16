@@ -37,6 +37,8 @@ public class User {
     @Transient
     private String passwordConfirm;
 
+    private Integer bonusesCount;
+
     @ManyToMany
     private List<Role> roles;
 
@@ -72,6 +74,14 @@ public class User {
 
     public void setPasswordConfirm(String passwordConfirm) {
         this.passwordConfirm = passwordConfirm;
+    }
+
+    public Integer getBonusesCount() {
+        return bonusesCount;
+    }
+
+    public void setBonusesCount(Integer bonusesCount) {
+        this.bonusesCount = bonusesCount;
     }
 
     public List<Role> getRoles() {
@@ -128,5 +138,13 @@ public class User {
 
     public void setOrders(List<Order> orders) {
         this.orders = orders;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
 }

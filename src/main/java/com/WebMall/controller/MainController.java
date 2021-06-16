@@ -1,9 +1,8 @@
 package com.WebMall.controller;
 
 import com.WebMall.model.Good;
-import com.WebMall.service.GoodsService;
+import com.WebMall.service.goodsServices.GoodsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +30,12 @@ public class MainController {
 
         model.addAttribute("goodsDiscount", goodsWithDiscount);
         model.addAttribute("goodsHits", goodsHits);
-        var user = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+
         return "index";
+    }
+
+    @RequestMapping("/test")
+    public void test(){
+
     }
 }

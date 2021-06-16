@@ -16,7 +16,10 @@ public class GoodCategory {
     @Column(length = 45)
     private String name;
 
-    @ManyToMany
+    @NotNull
+    private String imageUrl;
+
+    @ManyToMany(mappedBy = "goodCategories")
     private List<Good> goods;
 
     public Long getId() {
@@ -29,6 +32,14 @@ public class GoodCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public List<Good> getGoods() {
