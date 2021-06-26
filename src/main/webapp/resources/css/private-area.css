@@ -1,0 +1,172 @@
+.private-area {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.private-area-menu {
+  width: 25%;
+  margin-right: 40px;
+  position: relative;
+}
+
+.private-area-menu__item {
+  width: 100%;
+}
+
+.private-area .profile-avatar {
+  border: 1px solid blue;
+  width: 100px;
+  height: 100px;
+  margin-bottom: 5px;
+}
+
+.private-area-content {
+  width: 75%;
+}
+
+.user-firstName, .user-lastName {
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.private-area-list__item {
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.private-area-list__item span {
+  padding: 6px;
+  cursor: pointer;
+}
+
+.content-block {
+  -webkit-box-shadow: 2px 3px 5px #ddd;
+          box-shadow: 2px 3px 5px #ddd;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+.content-block__header {
+  margin-top: 0;
+}
+
+.content-block button {
+  margin-top: 15px;
+}
+
+.list-item-active {
+  background-color: #ebebeb;
+  border-radius: 8px;
+}
+
+.order {
+  margin-bottom: 25px;
+}
+
+.order-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.order-sum {
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.coupon {
+  border-bottom: 1px solid #ccc;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 25px 10px;
+}
+
+.coupon__preview {
+  width: 240px;
+  height: 89px;
+  background-color: purple;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: #fff;
+  font-size: 23px;
+  border-radius: 8px;
+}
+
+.coupon-info {
+  margin-left: 40px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.coupon-info__elem {
+  margin-top: 5px;
+}
+
+.edit-profile-panel {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.edit-profile-panel .edit-profile-input-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #eeeeee;
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.edit-profile-panel .edit-profile-input-cont:last-child {
+  margin-bottom: 0;
+}
+
+.edit-profile-panel .edit-profile-param {
+  color: #797979;
+  font-size: 16px;
+}
+
+.edit-profile-panel input {
+  width: 100%;
+  border: none;
+  outline: none;
+  margin-left: 8px;
+  height: 25px;
+  margin-right: 8px;
+  background-color: #eeeeee;
+  font-size: 16px;
+}
+
+.edit-profile-panel img {
+  width: 20px;
+  height: 20px;
+}
+
+.edit-profile-panel .edit-profile-param-icon {
+  cursor: pointer;
+}
+
+#account-page-link:before{
+  contain: none;
+}
+
+/*# sourceMappingURL=private-area.css.map */

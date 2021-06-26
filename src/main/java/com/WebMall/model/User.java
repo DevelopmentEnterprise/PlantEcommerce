@@ -39,17 +39,27 @@ public class User {
 
     private Integer bonusesCount;
 
+    private Integer ordersCount;
+    private Integer goodsBoughtCount;
+
     @ManyToMany
     private List<Role> roles;
 
     @OneToMany(mappedBy = "user")
     private List<Order> orders;
 
+    @ManyToMany
+    private List<Coupon> coupons;
+
     @OneToOne(mappedBy = "user")
     private Store store;
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getFirstName() {
@@ -82,6 +92,22 @@ public class User {
 
     public void setBonusesCount(Integer bonusesCount) {
         this.bonusesCount = bonusesCount;
+    }
+
+    public Integer getOrdersCount() {
+        return ordersCount;
+    }
+
+    public void setOrdersCount(Integer ordersCount) {
+        this.ordersCount = ordersCount;
+    }
+
+    public Integer getGoodsBoughtCount() {
+        return goodsBoughtCount;
+    }
+
+    public void setGoodsBoughtCount(Integer goodsBoughtCount) {
+        this.goodsBoughtCount = goodsBoughtCount;
     }
 
     public List<Role> getRoles() {
@@ -146,5 +172,13 @@ public class User {
 
     public void setStore(Store store) {
         this.store = store;
+    }
+
+    public List<Coupon> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
     }
 }

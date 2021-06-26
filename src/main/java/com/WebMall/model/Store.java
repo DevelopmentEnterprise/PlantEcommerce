@@ -38,8 +38,15 @@ public class Store {
     @OneToMany(mappedBy = "store")
     private List<Good> goods;
 
+    @OneToMany(mappedBy = "store")
+    private List<Coupon> coupons;
+
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -104,5 +111,13 @@ public class Store {
 
     public void setGoods(List<Good> goods) {
         this.goods = goods;
+    }
+
+    public List<Coupon> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
+        this.coupons = coupons;
     }
 }

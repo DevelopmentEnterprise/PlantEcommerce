@@ -16,9 +16,6 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-//    @NotNull
-//    private OrderType orderType;
-
     @NotNull
     private Status status;
 
@@ -45,12 +42,15 @@ public class Order {
         return id;
     }
 
-    @NotNull
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Status getStatus() {
         return status;
     }
 
-    public void setStatus(@NotNull Status status) {
+    public void setStatus(Status status) {
         this.status = status;
     }
 
@@ -70,12 +70,11 @@ public class Order {
         this.sum = sum;
     }
 
-    @NotNull
     public DeliveryType getDeliveryType() {
         return deliveryType;
     }
 
-    public void setDeliveryType(@NotNull DeliveryType deliveryType) {
+    public void setDeliveryType(DeliveryType deliveryType) {
         this.deliveryType = deliveryType;
     }
 

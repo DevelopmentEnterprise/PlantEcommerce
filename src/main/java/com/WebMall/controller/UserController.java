@@ -1,11 +1,15 @@
 package com.WebMall.controller;
 
+import com.WebMall.model.Coupon;
 import com.WebMall.model.LoginUser;
+import com.WebMall.model.Order;
 import com.WebMall.model.User;
 import com.WebMall.service.SecurityService;
 import com.WebMall.service.userServices.UserService;
 import com.WebMall.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +18,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class UserController {
@@ -69,4 +74,22 @@ public class UserController {
     public String logout(){
         return "logout";
     }
+
+    @GetMapping("/privatedetails")
+    public String privateArea(Model model){
+        String userName = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
+        User currentUser = userService.findByUsername(userName);
+
+        List<Order> userOrders = currentUser.getOrders();
+        List<Coupon> userCoupons = currentUser.getCoupons();
+
+        model.addAttribute("ordersCount", currentUser.getOrdersCount());
+        model.addAttribute("goodsBoughtCount", currentUser.getGoodsBoughtCount());
+        model.addAttribute("bonusesCount", currentUser.getBonusesCount());
+        model.addAttribute("userOrders", currentUser.getOrders());
+        model.addAttribute("userCoupons", currentUser.getCoupons());
+
+        return "private-area";
+    }
+
 }

@@ -24,7 +24,7 @@ public class MainController {
 //
 //        for (int i = 0; i < goodsWithDiscount.size(); i++) {
 //            int randIndex = random.nextInt(goodsWithDiscount.size());
-//            //goodsWithDiscount.get(randIndex).getDiscount()
+//            //goodsWithDiscount.get(randIndex).getPriceDiscount()
 //            randomGoodsWithDiscount.add(goodsWithDiscount.get(randIndex));
 //        }
 

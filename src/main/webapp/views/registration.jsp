@@ -9,6 +9,7 @@
 <head>
     <meta charset="utf-8">
     <title>Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <link href="resources/css/main.css" rel="stylesheet">
 </head>

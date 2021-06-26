@@ -1,13 +1,19 @@
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
-<html>
+<!DOCTYPE html>
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <title>Название</title>
+    <meta charset="utf-8">
+    <title>Личный кабинет</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/resources/css/main.css" />
+
+    <link href="resources/css/main.css" rel="stylesheet">
+    <link href="resources/css/private-area.css" rel="stylesheet">
 </head>
+
 <body>
     <header class="page-component">
         <div class="pc-type">
@@ -72,9 +78,9 @@
                 </div>
 
                 <div class="customer-services">
-                    <a href="/login" class="customer-services__elem">
+                    <div class="customer-services__elem">
                         <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" class="b2x8"><path fill-rule="evenodd" clip-rule="evenodd" d="M13.01 20.305c-5.105.586-9.51-3.37-9.51-8.442A8.507 8.507 0 018.788 3.99a5.453 5.453 0 005.288 4.123h.299a1 1 0 100-2h-.3a3.45 3.45 0 01-3.45-3.45v-1.29l-1.25.32A10.503 10.503 0 001.5 11.864c0 6.264 5.443 11.151 11.737 10.43 4.675-.537 8.503-4.26 9.156-8.913.505-3.6-.819-7.072-3.448-9.392a10.473 10.473 0 00-4.32-2.294 1 1 0 10-.5 1.937 8.473 8.473 0 013.496 1.857c2.132 1.88 3.202 4.687 2.791 7.613-.526 3.75-3.632 6.771-7.403 7.204zm-6.72-8.497c.19.181.45.292.71.292.26 0 .52-.11.71-.292.18-.191.29-.453.29-.714 0-.262-.11-.524-.29-.715a1.042 1.042 0 00-1.42 0c-.18.191-.29.453-.29.715 0 .261.11.523.29.714zm10 .002c.19.18.45.29.71.29.26 0 .52-.11.71-.29.09-.1.16-.21.21-.331.05-.12.08-.25.08-.38s-.03-.261-.08-.381-.12-.23-.21-.33c-.1-.091-.2-.161-.33-.211-.37-.16-.81-.06-1.09.21-.09.1-.16.21-.21.33-.05.12-.08.251-.08.381s.03.26.08.381c.05.12.12.23.21.33zm-7.497 4.995a1 1 0 111.414-1.415c.99.99 2.596.99 3.586 0a1 1 0 011.414 1.415 4.537 4.537 0 01-6.414 0z" fill="currentColor"></path></svg>
-                    </a>
+                    </div>
 
                     <div class="customer-services__elem">
                         <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" class="d1b3"><path d="M12.486 1.626L20.97 6.34A2 2 0 0122 8.088v7.824a2 2 0 01-1.029 1.748l-8.485 4.714a1 1 0 01-.972 0L3.03 17.66A2 2 0 012 15.912V8.088A2 2 0 013.029 6.34l8.485-4.714a1 1 0 01.972 0zM4 9.176v6.736l7 3.888v-6.711L4 9.176zm16 .022l-7 3.887V19.8l7-3.888V9.198zm-3.5-3.055L9.566 9.996l2.431 1.36 6.943-3.857-2.44-1.356zM12 3.644L5.079 7.488l2.433 1.36 6.929-3.849L12 3.644z" fill="currentColor"></path></svg>
@@ -148,24 +154,7 @@
             </div>
         </div>
 
-        <div class="mobile-header-type hide">
-            <div class="burger-menu">
-                <span></span>
-            </div>
-            <div class="logo-mobile"></div>
-            <div style="display: flex;">
-                <div class="search-btn mobile-header-type__elem">
-                    <img src="https://mstatic.wbstatic.net/sitemobile/3.5.5/assets/2c7cc256.svg" alt="">
-                </div>
-
-                <div class="profile-btn mobile-header-type__elem">
-                    <img src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'> <g opacity='0.75'> <path fill-rule='evenodd' clip-rule='evenodd' d='M12 21C16.9706 21 21 16.9706 21 12C21 7.02944 16.9706 3 12 3C7.02944 3 3 7.02944 3 12C3 16.9706 7.02944 21 12 21ZM12 23C18.0751 23 23 18.0751 23 12C23 5.92487 18.0751 1 12 1C5.92487 1 1 5.92487 1 12C1 18.0751 5.92487 23 12 23Z' fill='white'/> <path d='M7.51211 17.3721C7.03486 16.973 6.6116 16.5114 6.25488 16C7.51983 14.1865 9.62145 13 12.0002 13C14.3789 13 16.4806 14.1865 17.7455 16C17.3888 16.5114 16.9655 16.973 16.4883 17.3721C15.5853 15.8332 13.9134 14.8 12.0002 14.8C10.087 14.8 8.41512 15.8332 7.51211 17.3721Z' fill='white'/> <path fill-rule='evenodd' clip-rule='evenodd' d='M12 10.2C12.9389 10.2 13.7 9.43888 13.7 8.5C13.7 7.56112 12.9389 6.8 12 6.8C11.0611 6.8 10.3 7.56112 10.3 8.5C10.3 9.43888 11.0611 10.2 12 10.2ZM12 12C13.933 12 15.5 10.433 15.5 8.5C15.5 6.567 13.933 5 12 5C10.067 5 8.5 6.567 8.5 8.5C8.5 10.433 10.067 12 12 12Z' fill='white'/> </g> </svg>" alt="">
-                </div>
-
-                <div class="cart-btn mobile-header-type__elem" style="margin-right: 15px;">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none'%3E %3Cg opacity='0.75'%3E %3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M1 3C1 2.44772 1.44772 2 2 2H4.68722C5.16073 2 5.56934 2.3321 5.66611 2.79562L6.33513 6H19C20.1046 6 21 6.89543 21 8V12.325C21 13.2718 20.3362 14.0888 19.4094 14.2827L8.54269 16.5555C7.46144 16.7816 6.40161 16.0884 6.17556 15.0071L3.87444 4H2C1.44772 4 1 3.55228 1 3ZM7.92594 13.6194C8.03884 14.1601 8.56879 14.5069 9.1095 14.3939L18.2047 12.4922C18.668 12.3953 19 11.9867 19 11.5133V9C19 8.44772 18.5523 8 18 8H6.7527L7.92594 13.6194Z' fill='white'/%3E %3Ccircle cx='7.36359' cy='20.1815' r='1.81818' fill='white'/%3E %3Ccircle cx='16.4544' cy='20.1815' r='1.81818' fill='white'/%3E %3C/g%3E %3C/svg%3E" alt="">
-                </div>
-            </div>
+        <div class="mobile-type">
 
         </div>
     </header>
@@ -213,225 +202,264 @@
         </div>
     </div>
 
-    <div class="main-menu-mobile hide">
-        <div class="search-bar-mobile">
-            <div class="search-bar-mobile__icon">
-                <img src="https://mstatic.wbstatic.net/sitemobile/3.5.5/assets/2c7cc256.svg" alt="">
-            </div>
-            <input type="text" name="search-input" />
-        </div>
-
-        <div class="main-menu-mobile__categories">
-            <div class="categories-wrapper">
-                <a href="" class="category-mobile-category">
-                    <div class="category-mobile-category__content">Фиалки украинской селекции</div>
-                </a>
-                <a href="" class="category-mobile-category">
-                    <div class="category-mobile-category__content">Фиалки украинской селекции</div>
-                </a>
-                <a href="" class="category-mobile-category">
-                    <div class="category-mobile-category__content">Фиалки украинской селекции</div>
-                </a>
-            </div>
-        </div>
-    </div>
-
     <main class="page-component">
-        <div class="main-slider">
-            <!-- TODO: Написать крутой слайдер -->
-        </div>
+        <div class="private-area" style="margin-top: 25px;">
+            <div class="private-area-menu">
 
-        <!-- Block of discounts and special offers -->
-        <div class="spec-offers content-section">
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-        </div>
+                <div class="profile">
+                    <div class="profile-avatar">
+                        <img src="" alt="">
+                    </div>
+                    <div class="user-firstName">Имя</div>
+                    <div class="user-lastName">Фамилия</div>
+                    <div style="margin-bottom: 20px;">
+                        <div href="" style="color: blue; cursor: pointer;"><span class="private-area-link" id="account-page-link">Редактировать профиль</span></div>
+                    </div>
+                </div>
 
-        <!-- Block of discounts -->
-        <div class="good-discounts content-section">
-            <div class="sector-header">
-                <a href="/goods?categoryName=priceDiscount">Товары с нереальной скидкой!</a>
+                <div class="private-area-list">
+                    <div class="private-area-list__item"><span class="list-item-active private-area-link" id="dashboard-page-link">Главная</span></div>
+                    <div class="private-area-list__item"><span class="btn-underline private-area-link" id="cart-page-link">Моя корзина</span></div>
+                    <div class="private-area-list__item"><span class="btn-underline private-area-link" id="orders-page-link">Мои заказы</span></div>
+                    <div class="private-area-list__item"><span class="btn-underline private-area-link" id="coupons-page-link">Мои купоны</span></div>
+                </div>
+
             </div>
-            <div class="goods-list">
-                <c:forEach var="good" items="${goodsDiscount}">
-                    <div class="good-card" data="${good.getId()}">
+
+            <div class="private-area-content my-dashboard">
+                <div class="content-grid">
+                    <div style="display: flex;">
+                        <div class="content-block" id="coupon-activate" style="width: 50%; margin-right: 15px;">
+                            <h3 class="content-block__header">Применить купон</h3>
+                            <form action="" method="post">
+                                <div>
+                                    <input type="text" class="form-input" id="coupon-input" required placeholder="Введите промокод или купон">
+                                </div>
+
+                                <button type="submit" class="register-btn">Применить</button>
+                            </form>
+                        </div>
+
+                        <div class="content-block" style="width: 50%;">
+                            <h3 class="content-block__header">Сервис и помощь</h3>
+                            <div style="display: flex; justify-content: space-between;">
+                                <div class="trigger-btn-large" style="font-size: unset;text-transform: none; padding: 8px 15px">
+                                    <a href="">Условия оплаты</a>
+                                </div>
+                                <div class="trigger-btn-large" style="font-size: unset;text-transform: none; padding: 8px 15px">
+                                    <a href="">Условия пользования</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="content-block" style="width: 100%; margin-top: 45px;">
+                        <h3 class="content-block__header">Моя статистика</h3>
+                        <div style="display: flex; justify-content: space-between;">
+                            <div style="border: 1px solid #ccc; padding: 5px 12px; border-radius: 5px">
+                                Количество заказов:
+                                <div style="text-align: center;">${ordersCount}</div>
+                            </div>
+                            <div style="border: 1px solid #ccc; padding: 5px 12px; border-radius: 5px">
+                                Количество купленных товаров:
+                                <div style="text-align: center;">${goodsBoughtCount}</div>
+                            </div>
+
+                            <div style="border: 1px solid #ccc; padding: 5px 12px; border-radius: 5px">
+                                Количество бонусов на счету:
+                                <div style="text-align: center;">${bonusesCount}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="private-area-content my-cart hide">
+                <h2>Моя корзина</h2>
+                <div class="goods-list content-section">
+                    <div class="good-card">
                         <div class="good-card__to-bookmarks"></div>
 
                         <div class="good-card__img">
-                            <img src="${good.getGoodImages().get(0).getImageSrc()}" alt="">
+                            <img src="https://images.wbstatic.net/c246x328/new/25900000/25905681-1.jpg" alt="">
                         </div>
 
                         <div class="good-card__price">
-                            <div class="good-price">${good.getPrice()} <span>руб.</span></div>
+                            <div class="good-price">150 <span>руб.</span></div>
                             <div class="good-priceDiscount-price">
-                                ${ good.getPriceBeforeDiscount() } <span>руб.</span>
+                                180 <span>руб.</span>
                             </div>
-                            <div class="priceDiscount-percent">-${(100 * good.getPriceBeforeDiscount() - good.getPrice()) / good.getPriceBeforeDiscount()}%</div>
+                            <div class="priceDiscount-percent">-17%</div>
                         </div>
 
                         <div class="good-card__description">
-                            ${good.getDescription()}
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti hic molestiae rerum?
                         </div>
 
                         <div class="good-card__rating">
                             <svg xmlns="http://www.w3.org/2000/svg" width="196" height="16" viewBox="0 0 196 16" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
                                 <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M108.331 1.2306L110.112 5.6504L114.671 6.06111C114.987 6.08975 115.116 6.50347 114.876 6.72126L111.418 9.86297L112.454 14.5367C112.526 14.8615 112.19 15.117 111.918 14.9444L108 12.4666L104.082 14.9444C103.81 15.1162 103.475 14.8608 103.547 14.5367L104.583 9.86297L101.125 6.7205C100.885 6.50271 101.012 6.08899 101.329 6.06036L105.888 5.64965L107.669 1.2306C107.793 0.923134 108.207 0.923134 108.331 1.2306Z" stroke="#CB11AB"/> -->
                             </svg>
                         </div>
 
                         <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn">В корзину</div>
+                            <!-- <div class="add-to-cart-btn">В корзину</div> -->
                         </div>
                     </div>
-                </c:forEach>
-            </div>
 
-            <div class="trigger-btn-large-cont" style="margin-top: 80px;">
-                <a href="/goods?categoryName=priceDiscount" class="view-more-btn trigger-btn-large">
-                    Показать еще
-                </a>
-            </div>
-        </div>
-
-        <!-- Hits of sales -->
-        <div class="good-hits content-section">
-            <div class="sector-header">
-                <a href="/goods?categoryName=hits">Хиты продаж</a>
-            </div>
-            <div class="goods-list">
-                <c:forEach var="good" items="${goodsHits}">
-                    <div class="good-card" data="${good.getId()}">
+                    <div class="good-card">
                         <div class="good-card__to-bookmarks"></div>
 
                         <div class="good-card__img">
-                            <img src="${good.getGoodImages().get(0).getImageSrc()}" alt="">
+                            <img src="https://images.wbstatic.net/c246x328/new/25900000/25905681-1.jpg" alt="">
                         </div>
 
                         <div class="good-card__price">
-                            <div class="good-price">${good.getPrice()} <span>руб.</span></div>
-
-                            <c:if test="${good.getPriceBeforeDiscount() != null}">
-                                <div class="good-priceDiscount-price">
-                                        ${ good.getPriceBeforeDiscount() } <span>руб.</span>
-                                </div>
-                                <div class="priceDiscount-percent">-${(100 * good.getPriceBeforeDiscount() - good.getPrice()) / good.getPriceBeforeDiscount()}%</div>
-                            </c:if>
-
+                            <div class="good-price">150 <span>руб.</span></div>
+                            <div class="good-priceDiscount-price">
+                                180 <span>руб.</span>
+                            </div>
+                            <div class="priceDiscount-percent">-17%</div>
                         </div>
 
                         <div class="good-card__description">
-                                ${good.getDescription()}
+                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti hic molestiae rerum?
                         </div>
 
                         <div class="good-card__rating">
                             <svg xmlns="http://www.w3.org/2000/svg" width="196" height="16" viewBox="0 0 196 16" fill="none">
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                                <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"></path>
+                                <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M108.331 1.2306L110.112 5.6504L114.671 6.06111C114.987 6.08975 115.116 6.50347 114.876 6.72126L111.418 9.86297L112.454 14.5367C112.526 14.8615 112.19 15.117 111.918 14.9444L108 12.4666L104.082 14.9444C103.81 15.1162 103.475 14.8608 103.547 14.5367L104.583 9.86297L101.125 6.7205C100.885 6.50271 101.012 6.08899 101.329 6.06036L105.888 5.64965L107.669 1.2306C107.793 0.923134 108.207 0.923134 108.331 1.2306Z" stroke="#CB11AB"/> -->
                             </svg>
                         </div>
 
                         <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn">В корзину</div>
+                            <!-- <div class="add-to-cart-btn">В корзину</div> -->
                         </div>
+
                     </div>
-                </c:forEach>
+                </div>
             </div>
-        </div>
 
-        <!-- Block of recently viewes goods -->
-        <div class="recently-viewed content-section" style="margin-top: 70px">
-            <div class="sector-header">
-                <a href="">Вы смотрели</a>
-            </div>
-            <div class="goods-list">
-                <div class="good-card" data="${good.getId()}">
-                    <div class="good-card__to-bookmarks"></div>
+            <div class="private-area-content my-orders hide">
+                <h2>Мои заказы</h2>
+                <div class="orders-list">
 
-                    <div class="good-card__img">
-                        <img src="https://images.wbstatic.net/c246x328/new/25900000/25905681-1.jpg" alt="">
-                    </div>
+                    <c:forEach var="order" items="${userOrders}">
+                        <div class="order content-block">
+                            <div class="order-info">
+                                <div>
+                                    <h3 style="margin: 0;">Заказ от ${order.getOrderDate().toString()}</h3>
+                                    <div class="order-number">${order.getId()}</div>
+                                </div>
 
-                    <div class="good-card__price">
-                        <div class="good-price">150 <span>руб.</span></div>
-                        <div class="good-priceDiscount-price">
-                            180 <span>руб.</span>
+                                <div class="order-sum">${order.getSum()} <span>руб.</span></div>
+                            </div>
+                            <div class="goods-previews" style="display: flex; flex-wrap: wrap; margin-top: 20px;">
+                                <div class="good-preview" style="border: 1px solid red; width: 80px; height: 80px;">
+                                    <img src="" alt="">
+                                </div>
+                            </div>
                         </div>
-                        <div class="priceDiscount-percent">-17%</div>
-                    </div>
+                    </c:forEach>
+                </div>
+            </div>
 
-                    <div class="good-card__description">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti hic molestiae rerum?
-                    </div>
+            <div class="private-area-content my-coupons hide">
+                <h2>Мои купоны</h2>
+                <div class="coupons">
 
-                    <div class="good-card__rating">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="196" height="16" viewBox="0 0 196 16" fill="none">
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M88.331 1.2306L90.1118 5.6504L94.6708 6.06111C94.987 6.08975 95.1157 6.50347 94.8757 6.72126L91.4176 9.86297L92.4538 14.5367C92.5257 14.8615 92.1901 15.117 91.9185 14.9444L88.0004 12.4666L84.0824 14.9444C83.8101 15.1162 83.4752 14.8608 83.5471 14.5367L84.5833 9.86297L81.1245 6.7205C80.8845 6.50271 81.0124 6.08899 81.3293 6.06036L85.8884 5.64965L87.6692 1.2306C87.7928 0.923134 88.2074 0.923134 88.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M8.33102 1.2306L10.1118 5.6504L14.6708 6.06111C14.987 6.08975 15.1157 6.50347 14.8757 6.72126L11.4176 9.86297L12.4538 14.5367C12.5257 14.8615 12.1901 15.117 11.9185 14.9444L8.00045 12.4666L4.08244 14.9444C3.81007 15.1162 3.47519 14.8608 3.54705 14.5367L4.58333 9.86297L1.12453 6.7205C0.884502 6.50271 1.01242 6.08899 1.32934 6.06036L5.88837 5.64965L7.66916 1.2306C7.79276 0.923134 8.20742 0.923134 8.33102 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M28.331 1.2306L30.1118 5.6504L34.6708 6.06111C34.987 6.08975 35.1157 6.50347 34.8757 6.72126L31.4176 9.86297L32.4538 14.5367C32.5257 14.8615 32.1901 15.117 31.9185 14.9444L28.0004 12.4666L24.0824 14.9444C23.8101 15.1162 23.4752 14.8608 23.5471 14.5367L24.5833 9.86297L21.1245 6.7205C20.8845 6.50271 21.0124 6.08899 21.3293 6.06036L25.8884 5.64965L27.6692 1.2306C27.7928 0.923134 28.2074 0.923134 28.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M48.331 1.2306L50.1118 5.6504L54.6708 6.06111C54.987 6.08975 55.1157 6.50347 54.8757 6.72126L51.4176 9.86297L52.4538 14.5367C52.5257 14.8615 52.1901 15.117 51.9185 14.9444L48.0004 12.4666L44.0824 14.9444C43.8101 15.1162 43.4752 14.8608 43.5471 14.5367L44.5833 9.86297L41.1245 6.7205C40.8845 6.50271 41.0124 6.08899 41.3293 6.06036L45.8884 5.64965L47.6692 1.2306C47.7928 0.923134 48.2074 0.923134 48.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <path fill-rule="evenodd" clip-rule="evenodd" d="M68.331 1.2306L70.1118 5.6504L74.6708 6.06111C74.987 6.08975 75.1157 6.50347 74.8757 6.72126L71.4176 9.86297L72.4538 14.5367C72.5257 14.8615 72.1901 15.117 71.9185 14.9444L68.0004 12.4666L64.0824 14.9444C63.8101 15.1162 63.4752 14.8608 63.5471 14.5367L64.5833 9.86297L61.1245 6.7205C60.8845 6.50271 61.0124 6.08899 61.3293 6.06036L65.8884 5.64965L67.6692 1.2306C67.7928 0.923134 68.2074 0.923134 68.331 1.2306Z" fill="#CB11AB" stroke="#CB11AB"/>
-                            <!-- <path fill-rule="evenodd" clip-rule="evenodd" d="M108.331 1.2306L110.112 5.6504L114.671 6.06111C114.987 6.08975 115.116 6.50347 114.876 6.72126L111.418 9.86297L112.454 14.5367C112.526 14.8615 112.19 15.117 111.918 14.9444L108 12.4666L104.082 14.9444C103.81 15.1162 103.475 14.8608 103.547 14.5367L104.583 9.86297L101.125 6.7205C100.885 6.50271 101.012 6.08899 101.329 6.06036L105.888 5.64965L107.669 1.2306C107.793 0.923134 108.207 0.923134 108.331 1.2306Z" stroke="#CB11AB"/> -->
-                        </svg>
-                    </div>
+                    <c:forEach var="coupon" items="${userCoupons}">
+                        <div class="coupon">
+                            <div class="coupon__preview">
+                                <span>
+                                    Купон на ${coupon.getDiscount()}% скидку
+                                </span>
+                            </div>
+                            <div class="coupon-info">
+                                <div>
+                                    <div class="coupon-info__elem">Срок действия: ${coupon.getExpiredDate()}</div>
+                                    <div class="coupon-info__elem">Магазин: ${coupon.getStore().getName()}</div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:forEach>
 
-                    <div class="good-card-hover hide">
-                        <div class="add-to-cart-btn">В корзину</div>
-                    </div>
+
+                </div>
+            </div>
+
+            <div class="private-area-content my-account hide">
+                <h2>Редактирование профиля</h2>
+
+                <div class="edit-profile-panel">
+                    <form action="" method="post">
+                        <div class="edit-profile-input-cont">
+                            <span class="edit-profile-param">Имя</span>
+                            <input type="text" name="firstName">
+                            <span class="edit-profile-param-icon">
+                                <img src="static/pencil.svg" alt="">
+                            </span>
+                        </div>
+
+                        <div class="edit-profile-input-cont">
+                            <span class="edit-profile-param">Фамилия</span>
+                            <input type="text" name="lastName">
+                            <span class="edit-profile-param-icon">
+                                <img src="static/pencil.svg" alt="">
+                            </span>
+                        </div>
+
+                        <div class="edit-profile-input-cont">
+                            <span class="edit-profile-param">Email</span>
+                            <input type="text" name="Email">
+                            <span class="edit-profile-param-icon">
+                                <img src="static/pencil.svg" alt="">
+                            </span>
+                        </div>
+
+                        <div class="edit-profile-input-cont">
+                            <span class="edit-profile-param">Телефон</span>
+                            <input type="text" name="Tel">
+                            <span class="edit-profile-param-icon">
+                                <img src="static/pencil.svg" alt="">
+                            </span>
+                        </div>
+
+                        <div class="edit-profile-input-cont">
+                            <span class="edit-profile-param">Страна</span>
+                            <input type="text" name="country">
+                            <span class="edit-profile-param-icon">
+                                <img src="static/pencil.svg" alt="">
+                            </span>
+                        </div>
+
+                        <div class="edit-profile-input-cont">
+                            <span class="edit-profile-param">Город</span>
+                            <input type="text" name="city">
+                            <span class="edit-profile-param-icon">
+                                <img src="static/pencil.svg" alt="">
+                            </span>
+                        </div>
+
+                        <div>
+                            <button type="submit" class="register-btn" style="margin-top: 25px; width: 150px;">Сохранить</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
 
-        <!-- Our advantages -->
-        <div class="advantages content-section" style="margin-top: 80px">
-            <div class="sector-header">
-                Широкий ассортимент и высокое качество
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Доставка и оплата без проблем
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Широкий ассортимент
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Выгодный шоппинг
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-        </div>
+        <div style="height: 200px;"></div>
     </main>
 
     <div class="page-overlay hide">

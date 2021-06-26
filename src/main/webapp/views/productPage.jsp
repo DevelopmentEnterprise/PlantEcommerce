@@ -262,7 +262,7 @@
                     <a href="/goods?categoryName=${categoryName}&sortBy=name" class="sort-item">Названию</a>
                     <a href="/goods?categoryName=${categoryName}&sortBy=rating" class="sort-item">Рейтингу</a>
                     <a href="/goods?categoryName=${categoryName}&sortBy=price" class="sort-item">Цене</a>
-                    <a href="/goods?categoryName=${categoryName}&sortBy=discount" class="sort-item">Скидке</a>
+                    <a href="/goods?categoryName=${categoryName}&sortBy=priceDiscount" class="sort-item">Скидке</a>
                 </div>
 
                 <div class="goods-list content-section">
@@ -276,11 +276,11 @@
 
                             <div class="good-card__price">
                                 <div class="good-price">${good.getPrice()} <span>руб.</span></div>
-                                <c:if test="${good.getDiscount() != null}">
-                                    <div class="good-discount-price">
-                                            ${Math.round(good.getPrice() / (1 - (good.getDiscount()/100)))} <span>руб.</span>
+                                <c:if test="${good.getPriceBeforeDiscount() != null}">
+                                    <div class="good-priceDiscount-price">
+                                            ${ good.getPriceBeforeDiscount() } <span>руб.</span>
                                     </div>
-                                    <div class="discount-percent">-${good.getDiscount()}%</div>
+                                    <div class="priceDiscount-percent">-${(100 * good.getPriceBeforeDiscount() - good.getPrice()) / good.getPriceBeforeDiscount()}%</div>
                                 </c:if>
                             </div>
 

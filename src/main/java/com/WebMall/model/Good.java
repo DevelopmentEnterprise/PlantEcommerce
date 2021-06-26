@@ -21,7 +21,7 @@ public class Good {
     @NotNull
     private String description;
 
-    private Byte discount;
+    private Integer priceBeforeDiscount;
 
     @NotNull
     private Boolean isOnSale;
@@ -52,6 +52,10 @@ public class Good {
     @OneToMany(mappedBy = "good")
     private List<GoodImage> goodImages;
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }
@@ -72,12 +76,12 @@ public class Good {
         this.description = description;
     }
 
-    public Byte getDiscount() {
-        return discount;
+    public Integer getPriceBeforeDiscount() {
+        return priceBeforeDiscount;
     }
 
-    public void setDiscount(Byte discount) {
-        this.discount = discount;
+    public void setPriceBeforeDiscount(Integer priceBeforeDiscount) {
+        this.priceBeforeDiscount = priceBeforeDiscount;
     }
 
     public Boolean getOnSale() {

@@ -20,11 +20,23 @@ public class GoodImage {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getImageSrc() {
         return imageSrc;
     }
 
     public void setImageSrc(String imageSrc) {
         this.imageSrc = imageSrc;
+    }
+
+    public Good getGood() {
+        return good;
+    }
+
+    public void setGood(Good good) {
+        this.good = good;
     }
 }

@@ -80,6 +80,8 @@ public class GoodsServiceImpl implements GoodsService {
 
         if (sortBy != null){
             SortType sortType = getSortType(sortBy);
+
+            if (sortType != null)
             switch (sortType){
                 case POPULARITY -> goodsToShow = (List<Good>) sortGoodsByOrdersCount(goodsToShow);
                 case RATING -> goodsToShow = (List<Good>) sortGoodsByRating(goodsToShow);
@@ -110,7 +112,7 @@ public class GoodsServiceImpl implements GoodsService {
     public Collection<Good> getGoodsWithDiscount() {
         return goodRepository.findAll()
                 .stream()
-                .filter(el -> el.getDiscount() != null)
+                .filter(el -> el.getPriceBeforeDiscount() != null)
                 .sorted(Comparator.comparing(Good::getOrdersCount).reversed())
                 .collect(Collectors.toList());
     }
@@ -174,8 +176,8 @@ public class GoodsServiceImpl implements GoodsService {
         if (!checkItemsExist(goodsToSort)) return null;
 
         return goodsToSort.stream()
-                .filter(el -> el.getDiscount() != null)
-                .sorted(Comparator.comparing(Good::getDiscount).reversed())
+                .filter(el -> el.getPriceBeforeDiscount() != null)
+                .sorted(Comparator.comparing(Good::getPriceBeforeDiscount).reversed())
                 .collect(Collectors.toList());
     }
 
