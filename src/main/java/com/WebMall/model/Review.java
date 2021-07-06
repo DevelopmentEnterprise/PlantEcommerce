@@ -24,6 +24,10 @@ public class Review {
     @JoinColumn(name = "good_id")
     private Good good;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     @OneToMany(mappedBy = "review")
     private List<ReviewImage> reviewImages;
 
@@ -65,5 +69,13 @@ public class Review {
 
     public void setReviewImages(List<ReviewImage> reviewImages) {
         this.reviewImages = reviewImages;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

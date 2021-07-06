@@ -1,5 +1,6 @@
 package com.WebMall.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -30,6 +31,7 @@ public class OrderGood {
 
     @ManyToOne
     @JoinColumn(name = "order_id")
+    @JsonIgnore
     private Order order;
 
     public Long getId() {

@@ -6,7 +6,7 @@
 }
 
 .private-area-menu {
-  width: 25%;
+  width: 200px;
   margin-right: 40px;
   position: relative;
 }
@@ -16,7 +16,6 @@
 }
 
 .private-area .profile-avatar {
-  border: 1px solid blue;
   width: 100px;
   height: 100px;
   margin-bottom: 5px;
@@ -26,9 +25,10 @@
   width: 75%;
 }
 
-.user-firstName, .user-lastName {
+.store-name {
   font-size: 18px;
   font-weight: 600;
+  margin: 15px 0;
 }
 
 .private-area-list__item {
@@ -54,6 +54,15 @@
 
 .content-block button {
   margin-top: 15px;
+}
+
+.dashboard-help-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .list-item-active {
@@ -165,8 +174,18 @@
   cursor: pointer;
 }
 
-#account-page-link:before{
-  contain: none;
+@media (max-width: 600px) {
+  .private-area {
+    display: block;
+  }
+  .private-area-menu {
+    width: 100%;
+  }
+  .private-area-content {
+    width: 100%;
+  }
+  .dashboard-help-cont {
+    display: block;
+  }
 }
-
 /*# sourceMappingURL=private-area.css.map */

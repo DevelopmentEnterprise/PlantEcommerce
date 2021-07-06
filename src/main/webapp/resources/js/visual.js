@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", ()=>{
-    document.querySelector(".menu-button").addEventListener("click", handleMenuBtnClicked);
-    document.querySelector('.main-menu-close-btn').addEventListener('click', handleMenuBtnClicked);
+    document.querySelector(".menu-button").addEventListener("click", enableOverlayLayout);
+
+    if (document.querySelector('#page-overlay-close') != null)
+        document.querySelector('#page-overlay-close').addEventListener('click', disableOverlayLayout);
 
     const burgerMenu = document.querySelector('.burger-menu');
 
@@ -13,13 +15,24 @@ document.addEventListener("DOMContentLoaded", ()=>{
         });
     }
 
-    if(document.querySelector('.private-area-list') != null){
+    document.querySelector('.main-menu-close-btn').addEventListener('click', ()=>{
+        document.querySelector('.main-menu').classList.add('hide');
+        document.querySelector('.page-overlay').classList.add('hide');
+    });
+
+    if (document.querySelector('.private-area-list') != null){
         document.querySelectorAll('.private-area-link').forEach(el => {
             el.addEventListener('click', (e)=>{
                 let panelName = e.target.attributes.id.value.replace("-page-link", "");
                 panelName = ".my-"+panelName;
                 controlPrivateAreaPanelsEx(e.target, panelName);
             });
+        });
+    }
+
+    if (document.querySelector('#variation-add') != null){
+        document.querySelector('#variation-add').addEventListener('click', ()=>{
+            document.querySelector('.variation-popup').classList.remove('hide');
         });
     }
 
@@ -37,13 +50,26 @@ const responsiveUI = () => {
     }
 };
 
-const handleMenuBtnClicked = () => {
-    document.body.classList.toggle('scroll-stop');
+const enableOverlayLayout = () => {
+    document.body.classList.add('scroll-stop');
     const menu = document.querySelector('.main-menu');
     const pageOverlay = document.querySelector('.page-overlay');
 
-    menu.classList.toggle('hide');
-    pageOverlay.classList.toggle('hide');
+    menu.classList.remove('hide');
+    pageOverlay.classList.remove('hide');
+};
+
+const disableOverlayLayout = () => {
+    document.body.classList.remove('scroll-stop');
+    const menu = document.querySelector('.main-menu');
+    const pageOverlay = document.querySelector('.page-overlay');
+    const variationPopup = document.querySelector('.variation-popup');
+
+    menu.classList.add('hide');
+    pageOverlay.classList.add('hide');
+
+    if (variationPopup != null)
+        variationPopup.classList.add('hide');
 };
 
 // Logic for private area pages

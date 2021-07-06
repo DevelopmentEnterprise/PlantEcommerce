@@ -26,11 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .cors().and()
+                .exceptionHandling().accessDeniedPage("/accessDenied").and()
                 .authorizeRequests()
-//                .anyRequest().permitAll()
                 .antMatchers("/resources/**", "/registration").permitAll()
                 .antMatchers("/privatedetails").authenticated()
-                //.anyRequest().authenticated()
+                .antMatchers("/store/myStore", "/store/editStoreInfo", "/store/editStoreAddress",
+                        "/store/createStoreGood", "/store/editStoreGood").hasAnyRole("SELLER", "ADMIN", "CREATOR")
+                .antMatchers("/store/showStore").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

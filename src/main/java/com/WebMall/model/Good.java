@@ -1,5 +1,6 @@
 package com.WebMall.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -38,18 +39,22 @@ public class Good {
 
     @ManyToOne
     @JoinColumn(name = "store_id")
+    @JsonIgnore
     private Store store;
 
     @OneToMany(mappedBy = "good")
+    @JsonIgnore
     private List<GoodOption> goodOptions;
 
     @OneToMany(mappedBy = "good")
+    @JsonIgnore
     private List<Review> reviews;
 
     @ManyToMany
+    @JsonIgnore
     private List<GoodCategory> goodCategories;
 
-    @OneToMany(mappedBy = "good")
+    @OneToMany(mappedBy = "good", cascade = CascadeType.ALL)
     private List<GoodImage> goodImages;
 
     public void setId(Long id) {

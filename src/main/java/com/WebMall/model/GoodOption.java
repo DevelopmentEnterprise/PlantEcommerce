@@ -19,6 +19,9 @@ public class GoodOption {
     @NotNull
     private Integer price;
 
+//    @OneToOne
+//    private GoodImage img;
+
     @ManyToOne
     @JoinColumn(name = "good_id")
     private Good good;

@@ -40,6 +40,7 @@ public class User {
     private Integer bonusesCount;
 
     private Integer ordersCount;
+
     private Integer goodsBoughtCount;
 
     @ManyToMany
@@ -53,6 +54,9 @@ public class User {
 
     @OneToOne(mappedBy = "user")
     private Store store;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> userReviews;
 
     public Long getId() {
         return id;
@@ -180,5 +184,13 @@ public class User {
 
     public void setCoupons(List<Coupon> coupons) {
         this.coupons = coupons;
+    }
+
+    public List<Review> getUserReviews() {
+        return userReviews;
+    }
+
+    public void setUserReviews(List<Review> userReviews) {
+        this.userReviews = userReviews;
     }
 }

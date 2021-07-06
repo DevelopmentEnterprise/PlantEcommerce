@@ -1,0 +1,100 @@
+.good-params {
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.good-param {
+  margin-bottom: 30px;
+}
+
+.good-param__name {
+  display: block;
+  font-size: 18px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.good-param__input {
+  border-bottom: 1px solid #e8e8e8;
+  width: 100%;
+}
+
+.add-good-btn {
+  width: 150px;
+  padding: 0;
+  text-transform: unset;
+  padding: 5px 10px;
+  text-align: center;
+}
+
+.file-area {
+  border: 1px dashed #ccc;
+  text-align: center;
+  padding: 45px;
+  border-radius: 5px;
+  margin-top: 25px;
+}
+
+.file-upload-info {
+  margin-top: 25px;
+  font-size: 18px;
+}
+
+.variation-popup {
+  border: 1px solid #ccc;
+  position: fixed;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  background-color: #fff;
+  padding: 8px 10%;
+  border-radius: 5px;
+}
+
+.good-btn-submit{
+  background-color: #fff;
+  text-transform: none;
+  border-color: purple;
+  color: purple;
+  margin-top: 25px;
+}
+
+.good-btn-submit:hover{
+  background-color: purple;
+}
+
+.good-images{
+  margin-top: 25px;
+  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.good-image{
+  width: 120px;
+}
+
+.good-image-cont{
+  position: relative;
+}
+
+.good-image-overlay{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background-color: #000;
+  opacity: .5;
+}
+
+.delete-good-image{
+  top: 63px;
+  left: 43px;
+  z-index: 1;
+}
+/*# sourceMappingURL=add-good.css.map */

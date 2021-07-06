@@ -1,0 +1,251 @@
+.brief-info {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 1em;
+}
+
+.card-main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.good-images-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  width: 50%;
+  height: 629px;
+}
+
+.good-images-list {
+  width: 19%;
+  overflow: hidden;
+  position: relative;
+}
+
+.good-image-small {
+  position: relative;
+  height: 92px;
+  width: 72px;
+}
+
+.good-image-small img {
+  height: 100%;
+  width: 100%;
+}
+
+.good-image-small:not(:last-child) {
+  margin-bottom: 13px;
+}
+
+.good-image-small-active {
+  border: 2px solid purple;
+  border-radius: 3px;
+}
+
+.active-image {
+  width: 81%;
+  position: relative;
+}
+
+.active-image img {
+  width: 100%;
+  height: 100%;
+}
+
+.good-details {
+  width: 50%;
+  margin-left: 50px;
+}
+
+.good-price {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 25px;
+}
+
+.good-variations {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  margin-bottom: 25px;
+}
+
+.good-variations__items {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.good-variations__item:not(:last-child) {
+  margin-right: 15px;
+}
+
+.good-variations__item {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+  -webkit-transition: .4s ease-in-out;
+  transition: .4s ease-in-out;
+}
+
+.good-variations__item:hover {
+  background-color: purple;
+  color: #fff;
+  border-color: transparent;
+}
+
+.good-variations__item-active {
+  background-color: purple;
+  color: #fff;
+  border-color: transparent;
+}
+
+.user-avatar {
+  width: 45px;
+  height: 45px;
+  position: relative;
+  margin-right: 20px;
+}
+
+.user-avatar img {
+  height: 100%;
+  width: 100%;
+}
+
+.reviews {
+  margin-bottom: 50px;
+}
+
+.good-gallery-wrapper {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 100%;
+}
+
+.good-gallery {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color: #fff;
+  top: 0;
+  left: 0;
+}
+
+.good-gallery__img-previews {
+  padding: 16px 0;
+  width: 140px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.good-gallery__img-preview {
+  display: block;
+  width: 70px;
+  position: relative;
+  padding: 8px 0;
+}
+
+.good-gallery__img-preview img {
+  height: 100%;
+  width: 100%;
+}
+
+.good-gallery__current {
+  width: 100%;
+  padding: 0 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  border-left: 2px solid #ccc;
+}
+
+.good-selected-image {
+  width: calc(100% - 120px);
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.gallery-ctrl-btn {
+  width: 48px;
+  height: 48px;
+  padding: 12px;
+  -webkit-box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+          box-shadow: 0 2px 10px 0 rgba(0, 0, 0, 0.12);
+  border-radius: 100%;
+  -webkit-transition: .4s ease-in-out;
+  transition: .4s ease-in-out;
+}
+
+.gallery-ctrl-btn:hover {
+  background-color: purple;
+  color: #fff;
+}
+
+.close-good-gallery {
+  z-index: 2;
+}
+
+.close-good-gallery::before, .close-good-gallery::after {
+  background-color: black;
+}
+
+@media (max-width: 600px) {
+  .good-gallery-wrapper {
+    display: block;
+  }
+  .good-gallery__current {
+    border: none;
+  }
+  .good-gallery__img-previews {
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: row;
+            flex-direction: row;
+    width: 100%;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+  }
+  .card-main {
+    display: block;
+  }
+  .good-images-cont {
+    width: 100%;
+    max-height: 50vh;
+  }
+  .good-images-list {
+    margin-right: 15px;
+  }
+  .good-details {
+    width: 100%;
+    margin: 0;
+    margin-top: 25px;
+  }
+}
+/*# sourceMappingURL=good-card.css.map */

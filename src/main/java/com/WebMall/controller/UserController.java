@@ -8,8 +8,6 @@ import com.WebMall.service.SecurityService;
 import com.WebMall.service.userServices.UserService;
 import com.WebMall.validation.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -44,17 +42,14 @@ public class UserController {
     @PostMapping("/register")
     public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult,
                                HttpServletRequest request) {
-        userValidator.validate(userForm, bindingResult);
+        userValidator.validate(userForm, bindingResult);//validate user and find errors
 
         if (bindingResult.hasErrors()) {
             return "registration";
         }
 
-        String password = userForm.getPassword();
-
-        userService.save(userForm);
-
-        securityService.autoLogin(userForm.getEmail(), password, request);
+        userService.createNewUser(userForm);//create new user in DB
+        securityService.autoLogin(userForm.getEmail(), userForm.getPassword(), request);
         return "redirect:/";
     }
 
@@ -77,8 +72,8 @@ public class UserController {
 
     @GetMapping("/privatedetails")
     public String privateArea(Model model){
-        String userName = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
-        User currentUser = userService.findByUsername(userName);
+        User currentUser = userService.getLoggedUser();
+        if (currentUser == null) return "404";
 
         List<Order> userOrders = currentUser.getOrders();
         List<Coupon> userCoupons = currentUser.getCoupons();

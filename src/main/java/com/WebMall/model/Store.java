@@ -32,8 +32,8 @@ public class Store {
     @JoinColumn(name = "storestats_id")
     private StoreStats storeStats;
 
-    @OneToMany(mappedBy = "store")
-    private List<StoreAddress> storeAddresses;
+    @OneToOne(mappedBy = "store")
+    private StoreAddress storeAddress;
 
     @OneToMany(mappedBy = "store")
     private List<Good> goods;
@@ -97,12 +97,12 @@ public class Store {
         this.storeStats = storeStats;
     }
 
-    public List<StoreAddress> getStoreAddresses() {
-        return storeAddresses;
+    public StoreAddress getStoreAddress() {
+        return storeAddress;
     }
 
-    public void setStoreAddresses(List<StoreAddress> storeAddresses) {
-        this.storeAddresses = storeAddresses;
+    public void setStoreAddress(StoreAddress storeAddress) {
+        this.storeAddress = storeAddress;
     }
 
     public List<Good> getGoods() {

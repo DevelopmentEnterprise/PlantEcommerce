@@ -20,7 +20,7 @@ public class StoreAddress {
     @Column(length = 45)
     private String street;
 
-    @ManyToOne
+    @OneToOne
     @JoinColumn(name = "store_id")
     private Store store;
 

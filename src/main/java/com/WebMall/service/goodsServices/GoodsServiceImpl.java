@@ -5,7 +5,6 @@ import com.WebMall.model.GoodCategory;
 import com.WebMall.model.enums.SortType;
 import com.WebMall.repository.CategoryRepository;
 import com.WebMall.repository.GoodRepository;
-import com.WebMall.validation.GoodValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,29 +20,9 @@ public class GoodsServiceImpl implements GoodsService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    @Autowired
-    private GoodValidator goodValidator;
-
-    private boolean checkItemsExist(Object item){
-        if (item == null) return false;
-
-        if (item instanceof Collection){
-            return ((Collection) item).size() != 0;
-        }
-
-        return false;
-    }
-
-    private List<Good> limitGoodsByPageNum(List<Good> goods, Integer pageNum){
-        if (pageNum == null || pageNum == 1 || 35*pageNum+36 >= goods.size())
-            return goods.stream().limit(35).collect(Collectors.toList());
-
-        return goods.subList(35 * pageNum + 1, 35 * pageNum + 36);
-    }
-
     @Override
-    public int getPagersCountRequired(int allGoodsCount, int goodsToShowCount) {
-        return (int) Math.ceil((allGoodsCount - goodsToShowCount) / 35) + 1;
+    public int getPagersCountRequired(int allGoodsCount) {
+        return (int) Math.ceil(allGoodsCount/35) + 1;
     }
 
     @Override
@@ -55,6 +34,7 @@ public class GoodsServiceImpl implements GoodsService {
     public List<Good> getGoodsByRequestParams(String categoryName, Integer pageNum, String sortBy) {
         List<Good> goodsToShow = new ArrayList<>();
 
+        //Check category specification is set
         if (categoryName != null){
             switch (categoryName){
                 case "discount" -> {
@@ -71,6 +51,7 @@ public class GoodsServiceImpl implements GoodsService {
                     List<Good> foundGoods = (List<Good>) getRecommendedGoods();
                     goodsToShow = limitGoodsByPageNum(foundGoods, pageNum);
                 }
+
                 default -> {
                     List<Good> foundGoods = (List<Good>) getGoodsByCategory(categoryName);
                     goodsToShow = limitGoodsByPageNum(foundGoods, pageNum);
@@ -78,17 +59,12 @@ public class GoodsServiceImpl implements GoodsService {
             }
         }
 
+        //Check sort type is set
         if (sortBy != null){
             SortType sortType = getSortType(sortBy);
 
             if (sortType != null)
-            switch (sortType){
-                case POPULARITY -> goodsToShow = (List<Good>) sortGoodsByOrdersCount(goodsToShow);
-                case RATING -> goodsToShow = (List<Good>) sortGoodsByRating(goodsToShow);
-                case PRICE -> goodsToShow = (List<Good>) sortGoodsByPrice(goodsToShow);
-                case DISCOUNT -> goodsToShow = (List<Good>) sortGoodsByDiscount(goodsToShow);
-                case NAME -> goodsToShow = (List<Good>) sortGoodsByName(goodsToShow);
-            }
+                goodsToShow = sortGoodsByParam(goodsToShow, sortBy);
         }
 
         return goodsToShow;
@@ -109,6 +85,12 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
+    public void deleteGood(Good good) {
+        if (good == null) return;
+        goodRepository.delete(good);
+    }
+
+    @Override
     public Collection<Good> getGoodsWithDiscount() {
         return goodRepository.findAll()
                 .stream()
@@ -126,44 +108,6 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public boolean addNewGood(Good good) {
-        if (good == null) return false;
-
-        boolean validateRes = goodValidator.validateGood(good);
-
-        if (validateRes) {
-            goodRepository.save(good);
-            return true;
-        }else
-            return false;
-    }
-
-    @Override
-    public boolean removeGoodById(Long goodId) {
-        Good foundGood = getGoodById(goodId);
-
-        if (foundGood != null){
-            goodRepository.deleteById(goodId);
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
-    public boolean editGood(Good goodToEdit) {
-        if(goodToEdit == null) return false;
-
-        boolean isValid = goodValidator.validateGood(goodToEdit);
-        if (isValid){
-            goodRepository.save(goodToEdit);
-            return true;
-        }
-
-        return false;
-    }
-
-    @Override
     public Collection<Good> getRecommendedGoods() {
         return goodRepository.findAll().stream()
                 .filter(el -> el.getRating() >= 4.5 && el.getOrdersCount() > 10)
@@ -171,7 +115,56 @@ public class GoodsServiceImpl implements GoodsService {
                 .collect(Collectors.toList());
     }
 
-    //Sort goods by parameters
+    @Override
+    public List<Good> sortGoodsByParam(List<Good> goodsToSort, String sortTypeName) {
+        SortType sortType = getSortType(sortTypeName);
+        if (sortType == null) return goodsToSort;
+
+        return switch (sortType){
+            case POPULARITY -> (List<Good>) sortGoodsByOrdersCount(goodsToSort);
+            case RATING -> (List<Good>) sortGoodsByRating(goodsToSort);
+            case PRICE -> (List<Good>) sortGoodsByPrice(goodsToSort);
+            case DISCOUNT -> (List<Good>) sortGoodsByDiscount(goodsToSort);
+            case NAME -> (List<Good>) sortGoodsByName(goodsToSort);
+            default -> goodsToSort;
+        };
+    }
+
+    private boolean checkItemsExist(Object item){
+        if (item == null) return false;
+
+        if (item instanceof Collection){
+            return ((Collection) item).size() != 0;
+        }
+
+        return false;
+    }
+
+    private List<Good> limitGoodsByPageNum(List<Good> goods, Integer pageNum){
+//        if (pageNum == null || pageNum == 1 || 35*pageNum+36 >= goods.size())
+//            return goods.stream().limit(35).collect(Collectors.toList());
+//
+//        return goods.subList(35 * pageNum + 1, 35 * pageNum + 36);
+
+        if (pageNum == null || pageNum == 1)
+            return goods.stream().limit(35).collect(Collectors.toList());
+
+        int startFromIndex = 35*pageNum;
+        int endIndex = startFromIndex + 35;
+
+        //If last page has less than 35 elems select all to end
+        if (endIndex >= goods.size())
+            endIndex = goods.size()-1;
+
+        if (startFromIndex >= goods.size())
+            return goods.stream().limit(35).collect(Collectors.toList());
+
+        //Check if only one page is necessary
+        if (startFromIndex == endIndex) return goods;
+
+        return goods.subList(startFromIndex, endIndex);
+    }
+
     private Collection<Good> sortGoodsByDiscount(Collection<Good> goodsToSort) {
         if (!checkItemsExist(goodsToSort)) return null;
 

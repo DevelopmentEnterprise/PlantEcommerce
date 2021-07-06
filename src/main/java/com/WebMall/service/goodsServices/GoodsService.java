@@ -20,12 +20,10 @@ public interface GoodsService {
     Collection<Good> getRecommendedGoods();
 
     Good getGoodById(Long goodId);
+    void deleteGood(Good good);
     List<Good> getGoodsByRequestParams(String categoryName, Integer pageNum, String sortBy);
     Collection<Good> getGoodsByCategory(String categoryName);
-    int getPagersCountRequired(int allGoodsCount, int goodsToShowCount);
+    int getPagersCountRequired(int allGoodsCount);
     SortType getSortType(String sortType);
-
-    boolean addNewGood(Good good);
-    boolean removeGoodById(Long goodId);
-    boolean editGood(Good goodToEdit);
+    List<Good> sortGoodsByParam(List<Good> goodsToSort, String sortTypeName);
 }

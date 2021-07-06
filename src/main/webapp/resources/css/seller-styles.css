@@ -1,0 +1,164 @@
+.orders-types, .goods-types {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 25px;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.order-type, .good-type {
+  font-size: 18px;
+  margin-right: 25px;
+  cursor: pointer;
+  padding-bottom: 15px;
+  position: relative;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.order-type::before, .good-type::before {
+  bottom: -2px;
+}
+
+.order-type:hover, .good-type:hover {
+  color: purple;
+}
+
+.order-type-selected {
+  position: relative;
+  color: purple;
+}
+
+.order-type-selected::before {
+  content: '';
+  background-color: purple;
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -2px;
+}
+
+.orders-list {
+  width: 100%;
+}
+
+.order-good-info:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.goods-searcher {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  padding-bottom: 8px;
+  border-bottom: 2px solid #e8e8e8;
+  width: 100%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.goods-searcher__input {
+  margin-left: 5px;
+  width: 100%;
+}
+
+.goods-controls {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.add-good-btn {
+  width: 150px;
+  padding: 0;
+  text-transform: unset;
+  padding: 5px 10px;
+  text-align: center;
+  margin-left: 8px;
+  display: block;
+}
+
+.good-action-panel {
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 5px;
+  position: absolute;
+  background-color: #fff;
+}
+
+.good-action-panel__btn {
+  margin-bottom: 8px;
+  text-align: center;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 3px;
+  cursor: pointer;
+  font-size: 17px;
+}
+
+.good-control-btn__icon {
+  padding: 5px;
+}
+
+.user-confirm-panel {
+  border: 1px solid #ccc;
+  padding: 8px;
+  border-radius: 5px;
+  position: absolute;
+  background-color: #fff;
+}
+
+.user-confirm-panel__trigger-btns {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.user-confirm-panel__accept, .user-confirm-panel__cancel {
+  border: none;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.user-confirm-panel__accept {
+  background-color: #4D9C31;
+}
+
+.user-confirm-panel__accept:hover {
+  background-color: #6ae73d;
+}
+
+.user-confirm-panel__cancel {
+  background-color: red;
+}
+
+.user-confirm-panel__cancel:hover {
+  background-color: #eb5454;
+}
+
+.user-confirm-panel h3 {
+  margin-top: 0;
+  text-align: center;
+}
+
+@media (max-width: 600px) {
+  .goods-controls {
+    display: block;
+  }
+  .add-good-btn {
+    margin: 15px 0 0 0;
+  }
+}
+/*# sourceMappingURL=seller-styles.css.map */

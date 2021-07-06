@@ -210,7 +210,6 @@
 
 .main-menu__subcategories {
   width: 70%;
-  border: 1px solid blue;
   border-left: 2px solid #e8e8e8;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -516,6 +515,23 @@
   }
 }
 
+.bread-crumbs {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.bread-crumbs__item {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.bread-crumbs__item:not(:last-child)::after {
+  content: '/';
+  margin-left: 4px;
+  color: #d5d5d5;
+}
+
 .trigger-btn-large-cont {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -551,6 +567,20 @@
 
 .trigger-btn-large:hover {
   background-color: #4D9C31;
+  color: #fff;
+}
+
+.trigger-btn-dark {
+  border: 1px solid purple;
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 5px;
+  -webkit-transition: .4s ease-in-out;
+  transition: .4s ease-in-out;
+}
+
+.trigger-btn-dark:hover {
+  background-color: purple;
   color: #fff;
 }
 
@@ -610,6 +640,110 @@
   left: 0;
 }
 
+.no-border-input {
+  border: none;
+  outline: none;
+  font-size: 16px;
+}
+
+.gen-table {
+  text-align: center;
+  position: relative;
+  border: 1px solid #ccc;
+  border-collapse: collapse;
+}
+
+.gen-table td {
+  padding: 8px 0;
+}
+
+.gen-table tr {
+  border-bottom: 1px solid #ccc;
+}
+
+.c-pointer {
+  cursor: pointer;
+}
+
+.custom-select {
+  -webkit-appearance: none;
+     -moz-appearance: none;
+          appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: 0 1em 0 0;
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  cursor: inherit;
+  line-height: inherit;
+  z-index: 1;
+  outline: none;
+}
+
+.custom-select::-ms-expand {
+  display: none;
+}
+
+.select {
+  display: -ms-grid;
+  display: grid;
+      grid-template-areas: "select";
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  position: relative;
+  min-width: 15ch;
+  max-width: 30ch;
+  border-radius: 0.25em;
+  padding: 0.25em 0.5em;
+  font-size: 1.25rem;
+  cursor: pointer;
+  line-height: 1.1;
+  border: 1px solid #ccc;
+}
+
+.select select, .select::after {
+  -ms-grid-row: 1;
+  -ms-grid-column: 1;
+  grid-area: select;
+}
+
+.select::after {
+  content: "";
+  -ms-grid-column-align: end;
+      justify-self: end;
+  width: 0.8em;
+  height: 0.5em;
+  background-color: black;
+  -webkit-clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+          clip-path: polygon(100% 0%, 0 0%, 50% 100%);
+}
+
+.custom-select:focus + .focus {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  border: 2px solid var(--select-focus);
+  border-radius: inherit;
+}
+
+.slider-control-btn {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  cursor: pointer;
+}
+
 .good-card {
   width: 261px;
   border-radius: 5px;
@@ -628,6 +762,11 @@
 
 .good-card__img img {
   width: 100%;
+}
+
+.good-card__name{
+  font-size: 18px;
+  margin-bottom: 5px;
 }
 
 .good-card__price {
@@ -668,17 +807,31 @@
   padding: 15px 0;
 }
 
+.good-card__rating {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .good-card:nth-child(n+2) {
   margin-left: 50px;
+}
+
+.rating-star-cont {
+  width: 17px;
+  height: 17px;
+  position: relative;
+  margin-right: 5px;
+}
+
+.rating-star-cont img {
+  width: 100%;
+  height: 100%;
 }
 
 .good-price {
   font-weight: 700;
   font-size: 20px;
-}
-
-.good-price span {
-  font-size: 16px;
 }
 
 .good-discount-price {
@@ -747,7 +900,6 @@ footer {
   border: 1px solid #ddd;
   border-radius: 4px;
   max-width: 350px;
-  min-width: 300px;
   margin-top: 20px;
 }
 
@@ -793,6 +945,25 @@ footer {
 
 .register-btn:hover {
   background-color: #6ee244;
+}
+
+.stars-cont {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin: 15px 0;
+}
+
+.star-cont {
+  width: 20px;
+  height: 20px;
+  position: relative;
+  margin-right: 5px;
+}
+
+.star-cont img {
+  height: 100%;
+  width: 100%;
 }
 
 * {

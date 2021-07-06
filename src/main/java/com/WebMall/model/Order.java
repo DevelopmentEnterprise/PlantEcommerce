@@ -2,6 +2,7 @@ package com.WebMall.model;
 
 import com.WebMall.model.enums.DeliveryType;
 import com.WebMall.model.enums.Status;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -29,6 +30,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "user_id")
+    @JsonIgnore
     private User user;
 
     @OneToMany(mappedBy = "order")
@@ -36,6 +38,7 @@ public class Order {
 
     @ManyToOne
     @JoinColumn(name = "store_id")
+    @JsonIgnore
     private Store store;
 
     public Long getId() {

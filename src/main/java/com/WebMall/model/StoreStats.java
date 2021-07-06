@@ -17,6 +17,8 @@ public class StoreStats {
 
     private Integer goodsSold;
 
+    private Integer diffCustomersCount;
+
     @OneToOne(mappedBy = "storeStats")
     private Store store;
 
@@ -42,6 +44,14 @@ public class StoreStats {
 
     public void setGoodsSold(Integer goodsSold) {
         this.goodsSold = goodsSold;
+    }
+
+    public Integer getDiffCustomersCount() {
+        return diffCustomersCount;
+    }
+
+    public void setDiffCustomersCount(Integer diffCustomersCount) {
+        this.diffCustomersCount = diffCustomersCount;
     }
 
     public Store getStore() {

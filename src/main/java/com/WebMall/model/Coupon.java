@@ -14,6 +14,7 @@ public class Coupon {
     private String coupon;
     private Date expiredDate;
     private Byte discount;
+    private Boolean isActive;
 
     @ManyToOne
     @JoinColumn(name = "store_id")
@@ -52,6 +53,14 @@ public class Coupon {
 
     public void setDiscount(Byte discount) {
         this.discount = discount;
+    }
+
+    public Boolean getActive() {
+        return isActive;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
     }
 
     public Store getStore() {

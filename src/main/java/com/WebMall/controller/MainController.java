@@ -34,8 +34,17 @@ public class MainController {
         return "index";
     }
 
+    @RequestMapping("/accessDenied")
+    public String pageForbidden(){
+        return "403";
+    }
+
+    @RequestMapping("/notFound")
+    public String pageNotFound(){
+        return "404";
+    }
+
     @RequestMapping("/test")
     public void test(){
-
     }
 }

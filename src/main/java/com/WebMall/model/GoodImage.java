@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,9 +14,15 @@ public class GoodImage {
 
     private String imageSrc;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "good_id")
+    @JsonIgnore
     private Good good;
+
+//    @OneToOne
+//    @JsonIgnore
+//    @JoinColumn(name = "good-option_id")
+//    private GoodOption goodOption;
 
     public Long getId() {
         return id;
