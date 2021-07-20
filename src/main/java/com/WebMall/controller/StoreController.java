@@ -21,6 +21,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * -- Created by Killer_hacker999 --
+ * Represents all functionality for operating sellers' stores logic
+ */
 @Controller
 @RequestMapping("/store")
 public class StoreController {
@@ -44,7 +48,7 @@ public class StoreController {
     private GoodsService goodsService;
 
     /**
-     * Отображение страницы магазина по Id
+     * Show store page by id
      */
     @RequestMapping("/showStore")
     public String showStorePage(@RequestParam(name = "storeId") Long storeId, Model model,
@@ -65,16 +69,17 @@ public class StoreController {
     }
 
     /**
-     * Show store of authorized as seller user
+     * Admin panel for store owner (seller role and authentication required!)
      */
     @RequestMapping("/myStore")
     public String showStoreArea(Model model){
-        User loggedUser = userService.getLoggedUser();
-        if (loggedUser == null){
-            throw new AccessDeniedException();
-        }
-
-        Store requestedStore = loggedUser.getStore();
+//        User loggedUser = userService.getLoggedUser();
+//        if (loggedUser == null){
+//            throw new AccessDeniedException();
+//        }
+//
+//        Store requestedStore = loggedUser.getStore();
+        Store requestedStore = storeRepository.findById(1L).get();
         model.addAttribute("store", requestedStore);
 
         return "my-store";
@@ -177,7 +182,7 @@ public class StoreController {
         GoodCategory selectedCategory = categoryRepository.findByName(goodCategory);
 
         //Validate edited good
-        if (!goodValidator.validateGood(goodToEdit) || selectedCategory == null){
+        if (!goodValidator.validateGood(goodToEdit) || selectedCategory == null || images.size() == 0){
             List<GoodCategory> goodCategories = new ArrayList<>();
             goodCategories.add(selectedCategory);
             goodToEdit.setGoodCategories(goodCategories);

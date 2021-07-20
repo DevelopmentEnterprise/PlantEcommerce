@@ -5,5 +5,6 @@ public enum Status {
     ASSEMBLY,
     DELIVER,
     COMPLETED,
-    RETURNED
+    RETURNED,
+    CANCELED
 }

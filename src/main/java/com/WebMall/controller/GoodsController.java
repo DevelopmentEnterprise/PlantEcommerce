@@ -12,6 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * -- Created by Killer_hacker999 --
+ * Represents all functionality for operating goods logic
+ */
 @Controller
 @RequestMapping("/goods")
 public class GoodsController {
@@ -19,12 +23,16 @@ public class GoodsController {
     @Autowired
     private GoodsService goodsService;
 
+    /**
+     * @return goods page filtered and sorted by params (used for good categories,
+     * special types like discount...)
+     */
     @RequestMapping
     public String goods(Model model, @RequestParam(name = "categoryName") String categoryName,
                         @RequestParam(name = "pageNum", required = false) Integer pageNum,
                         @RequestParam(name = "sortBy", required = false) String sortType){
 
-        List<Good> goodsToShow = goodsService.getGoodsByRequestParams(categoryName, pageNum-1, sortType);
+        List<Good> goodsToShow = goodsService.getGoodsByRequestParams(categoryName, pageNum, sortType);
         int pagersRequired = goodsService.getPagersCountRequired(goodsToShow.size());
 
         model.addAttribute("goodsToShow", goodsToShow);
@@ -44,6 +52,9 @@ public class GoodsController {
         return "goodsPage";
     }
 
+    /**
+     * Shows good card by id
+     */
     @RequestMapping("/{goodId}")
     public String showGood(@PathVariable Long goodId, Model model){
         Good foundGood = goodsService.getGoodById(goodId);

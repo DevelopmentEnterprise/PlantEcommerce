@@ -197,7 +197,7 @@
         <a href="">${good.reviews.size()} отзыва</a>
     </div>
 
-    <div class="card-main">
+    <div class="card-main" data="${good.id}">
         <div class="good-images-cont">
 
             <div class="good-images-list">
@@ -243,7 +243,8 @@
             </c:if>
 
             <div class="trigger-btns">
-                <div class="add-to-cart-btn c-pointer" style="margin: 0 0 15px 0;">ДОБАВИТЬ В КОРЗИНУ</div>
+                <div class="cart-state hide"></div>
+                <div class="add-to-cart-btn c-pointer" style="margin: 0 0 15px 0;" data="${good.id}">ДОБАВИТЬ В КОРЗИНУ</div>
             </div>
 
             <div class="other-good-info">
@@ -437,4 +438,20 @@
 <!-- Connect js -->
 <script src="${contextPath}/resources/js/visual.js"></script>
 <script src="${contextPath}/resources/js/good-page.js"></script>
+<script src="${contextPath}/resources/js/cart-scripts.js"></script>
+
+<script>
+    const addToCartBtn = document.querySelector('.add-to-cart-btn');
+    const cartState = document.querySelector('.cart-state');
+
+    const goodId = parseInt(addToCartBtn.getAttribute('data'));
+    const currentGoodInCartQuantity = getCartItemQuantity(goodId);
+
+    //Check current good is in cart
+    if (currentGoodInCartQuantity !== -1){
+        cartState.classList.remove('hide');
+        cartState.textContent = 'В корзине: ' + currentGoodInCartQuantity + 'шт.';
+    }
+
+</script>
 </html>

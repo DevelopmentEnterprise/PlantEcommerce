@@ -82,23 +82,6 @@
   display: block;
 }
 
-.good-action-panel {
-  border: 1px solid #ccc;
-  padding: 10px;
-  border-radius: 5px;
-  position: absolute;
-  background-color: #fff;
-}
-
-.good-action-panel__btn {
-  margin-bottom: 8px;
-  text-align: center;
-  border-bottom: 1px solid #ccc;
-  padding-bottom: 3px;
-  cursor: pointer;
-  font-size: 17px;
-}
-
 .good-control-btn__icon {
   padding: 5px;
 }
@@ -151,6 +134,48 @@
 .user-confirm-panel h3 {
   margin-top: 0;
   text-align: center;
+}
+
+.store-edit-popup{
+  border: 1px solid #ccc;
+  position: fixed;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  background-color: #fff;
+  padding: 8px 10%;
+  border-radius: 5px;
+}
+
+.cancel-order-btn, .save-store-info{
+  text-align: center;
+  margin-bottom: 45px;
+}
+
+.save-store-info{
+  border-color: purple;
+}
+.save-store-info:hover{
+  background-color: purple;
+}
+
+.add-coupon-btn{
+  display: inline-block;
+  text-transform: none;
+  padding: 10px 50px;
+}
+
+.coupon-add-popup{
+  position: fixed;
+  border: 1px solid #ccc;
+  width: 50%;
+  height: 50%;
+  top: 25%;
+  left: 25%;
+  background-color: #fff;
+  padding: 8px 10%;
+  border-radius: 5px;
 }
 
 @media (max-width: 600px) {

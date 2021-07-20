@@ -1,8 +1,6 @@
 package com.WebMall.controller;
 
-import com.WebMall.model.Coupon;
 import com.WebMall.model.LoginUser;
-import com.WebMall.model.Order;
 import com.WebMall.model.User;
 import com.WebMall.service.SecurityService;
 import com.WebMall.service.userServices.UserService;
@@ -14,10 +12,17 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
+import java.util.ArrayList;
 
+/**
+ * -- Created by Killer_hacker999 --
+ *
+ * Represents all functionality for operating user logic:
+ * authentication, registration...
+ */
 @Controller
 public class UserController {
     @Autowired
@@ -36,7 +41,7 @@ public class UserController {
     }
 
     /**
-     * @return register view
+     * @return register layout
      * Registration page with data handling
      */
     @PostMapping("/register")
@@ -75,8 +80,9 @@ public class UserController {
         User currentUser = userService.getLoggedUser();
         if (currentUser == null) return "404";
 
-        List<Order> userOrders = currentUser.getOrders();
-        List<Coupon> userCoupons = currentUser.getCoupons();
+        //TODO: При переходе на эту страницу сделать автозаполнение информации профиля (имя, фамилия...)
+        //TODO: Заполнеть список заказов фотографиями товаров
+        //TODO: Если пользователь - продавец, то активировать кнопку перехода в кабинет продавца
 
         model.addAttribute("ordersCount", currentUser.getOrdersCount());
         model.addAttribute("goodsBoughtCount", currentUser.getGoodsBoughtCount());
@@ -85,6 +91,22 @@ public class UserController {
         model.addAttribute("userCoupons", currentUser.getCoupons());
 
         return "private-area";
+    }
+
+    @RequestMapping("/cart")
+    public String showUserCart(Model model){
+//        boolean isUserAuthenticated = userService.checkAuthUser();
+//        if (!isUserAuthenticated){
+//            model.addAttribute("cart", new ArrayList<>());
+//            return "cart";
+//        }
+//
+//        List<CartItem> userCart = userService.getLoggedUser().getCart();
+
+//        List<CartItem> userCart = userService.findByUsername("iluha1401.ig@gmail.com").getCart();
+
+        model.addAttribute("cart", new ArrayList<>());
+        return "cart";
     }
 
 }

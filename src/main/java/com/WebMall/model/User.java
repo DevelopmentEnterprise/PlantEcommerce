@@ -58,6 +58,15 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<Review> userReviews;
 
+//    @ManyToMany(cascade = CascadeType.ALL)
+//    @JoinTable(name = "users_goods",
+//            joinColumns = @JoinColumn(name = "user_id"),
+//            inverseJoinColumns = @JoinColumn(name = "good_id"))
+//    private List<Good> cart;
+
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<CartItem> cart;
+
     public Long getId() {
         return id;
     }
@@ -192,5 +201,13 @@ public class User {
 
     public void setUserReviews(List<Review> userReviews) {
         this.userReviews = userReviews;
+    }
+
+    public List<CartItem> getCart() {
+        return cart;
+    }
+
+    public void setCart(List<CartItem> cart) {
+        this.cart = cart;
     }
 }

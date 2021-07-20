@@ -126,7 +126,6 @@ public class GoodsServiceImpl implements GoodsService {
             case PRICE -> (List<Good>) sortGoodsByPrice(goodsToSort);
             case DISCOUNT -> (List<Good>) sortGoodsByDiscount(goodsToSort);
             case NAME -> (List<Good>) sortGoodsByName(goodsToSort);
-            default -> goodsToSort;
         };
     }
 
@@ -149,6 +148,8 @@ public class GoodsServiceImpl implements GoodsService {
         if (pageNum == null || pageNum == 1)
             return goods.stream().limit(35).collect(Collectors.toList());
 
+        pageNum-=1;
+
         int startFromIndex = 35*pageNum;
         int endIndex = startFromIndex + 35;
 
@@ -168,10 +169,19 @@ public class GoodsServiceImpl implements GoodsService {
     private Collection<Good> sortGoodsByDiscount(Collection<Good> goodsToSort) {
         if (!checkItemsExist(goodsToSort)) return null;
 
-        return goodsToSort.stream()
-                .filter(el -> el.getPriceBeforeDiscount() != null)
-                .sorted(Comparator.comparing(Good::getPriceBeforeDiscount).reversed())
+        List<Good> goodsWithDiscount = goodsToSort.stream()
+                .filter(el -> el.getPriceBeforeDiscount() != null).sorted((el1, el2) ->
+                        Integer.compare(el2.getPriceBeforeDiscount() - el2.getPrice(), el1.getPriceBeforeDiscount() - el1.getPrice())).collect(Collectors.toList());
+
+        List<Good> goodsWithNoDiscount = goodsToSort.stream()
+                .filter(el -> el.getPriceBeforeDiscount() == null)
                 .collect(Collectors.toList());
+
+        List<Good> resultGoods = new ArrayList<>();
+        resultGoods.addAll(goodsWithDiscount);
+        resultGoods.addAll(goodsWithNoDiscount);
+
+        return resultGoods;
     }
 
     private Collection<Good> sortGoodsByName(Collection<Good> goodsToSort) {

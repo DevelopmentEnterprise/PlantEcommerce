@@ -27,6 +27,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .cors().and()
+                .csrf().ignoringAntMatchers("/api/store/**", "/api/customer/**").and()
                 .exceptionHandling().accessDeniedPage("/accessDenied").and()
                 .authorizeRequests()
                 .antMatchers("/resources/**", "/registration").permitAll()
@@ -34,6 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/store/myStore", "/store/editStoreInfo", "/store/editStoreAddress",
                         "/store/createStoreGood", "/store/editStoreGood").hasAnyRole("SELLER", "ADMIN", "CREATOR")
                 .antMatchers("/store/showStore").permitAll()
+                .antMatchers("/test/**").permitAll()
                 .and()
                 .formLogin()
                 .loginPage("/login")

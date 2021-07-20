@@ -1,5 +1,7 @@
 package com.WebMall.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +16,8 @@ public class Coupon {
     private String coupon;
     private Date expiredDate;
     private Byte discount;
+
+    @JsonProperty
     private Boolean isActive;
 
     @ManyToOne

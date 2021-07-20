@@ -42,7 +42,7 @@ public class Good {
     @JsonIgnore
     private Store store;
 
-    @OneToMany(mappedBy = "good")
+    @OneToMany(mappedBy = "good", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<GoodOption> goodOptions;
 
@@ -50,12 +50,16 @@ public class Good {
     @JsonIgnore
     private List<Review> reviews;
 
-    @ManyToMany
+    @ManyToMany(cascade = CascadeType.ALL)
     @JsonIgnore
     private List<GoodCategory> goodCategories;
 
     @OneToMany(mappedBy = "good", cascade = CascadeType.ALL)
     private List<GoodImage> goodImages;
+
+    @JsonIgnore
+    @OneToOne(mappedBy = "good")
+    private CartItem cartItem;
 
     public void setId(Long id) {
         this.id = id;
@@ -175,5 +179,13 @@ public class Good {
 
     public void setGoodImages(List<GoodImage> goodImages) {
         this.goodImages = goodImages;
+    }
+
+    public CartItem getCartItem() {
+        return cartItem;
+    }
+
+    public void setCartItem(CartItem cartItem) {
+        this.cartItem = cartItem;
     }
 }

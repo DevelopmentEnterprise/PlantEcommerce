@@ -1,8 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<jsp:useBean id="goodsDiscount" scope="request" type="java.util.List<com.WebMall.model.Good>"/>
-<jsp:useBean id="goodsHits" scope="request" type="java.util.List<com.WebMall.model.Good>"/>
+<jsp:useBean id="cart" scope="request" type="java.util.List<com.WebMall.model.CartItem>"/>
 
 <html>
 <head>
@@ -10,7 +9,9 @@
     <title>Название</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/resources/css/main.css" />
+    <link rel="stylesheet" href="/resources/css/cart.css">
 </head>
+
 <body>
     <header class="page-component">
         <div class="pc-type">
@@ -240,278 +241,48 @@
     </div>
 
     <main class="page-component">
-        <div class="main-slider">
-        </div>
+        <h1>Корзина</h1>
 
-        <div class="spec-offers content-section">
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-            <div class="spec-offers__elem">
-                <a href="">
-                    <img src="" alt="Special offer">
-                </a>
-            </div>
-        </div>
+        <div class="cart-cont">
+            <div class="cart-items">
+                <div class="cart-empty-info hide">
+                    <h2>Ваша корзина пуста</h2>
+                    <div>Для удобства рекомендуем воспользоваться поиском</div>
+                </div>
 
-        <div class="good-discounts content-section">
-            <div class="sector-header">
-                <a href="/goods?categoryName=discount">Товары с нереальной скидкой!</a>
-            </div>
-            <div class="goods-list">
-                <c:forEach var="good" items="${goodsDiscount}">
-                    <div class="good-card">
-                        <div class="good-card__to-bookmarks"></div>
-
-                        <a href="/goods/${good.id}" class="good-card__img">
-                            <img src="${good.goodImages.get(0).imageSrc}" alt="">
-                        </a>
-
-                        <div class="good-card__price">
-                            <div class="good-price">${good.price} <span>руб.</span></div>
-
-                            <c:if test="${good.priceBeforeDiscount != null}">
-                                <div class="good-discount-price">
-                                        ${ good.priceBeforeDiscount } <span>руб.</span>
-                                </div>
-
-                                <div class="discount-percent">-${ Math.round(100 * (1 - good.price / good.priceBeforeDiscount)) }%</div>
-                            </c:if>
+                <c:forEach items="${cart}" var="cartItem">
+                    <div class="cart-item" data="${cartItem.good.id}">
+                        <div class="cart-item__img">
+                            <img src="${cartItem.good.goodImages[0].imageSrc}" alt="${cartItem.good.name}">
                         </div>
-
-                        <div class="good-card__name">
-                                ${good.name}
+                        <div class="cart-item-info">
+                            <div class="cart-item-info__name">${cartItem.good.name}</div>
+                            <div class="cart-item-info__description">${cartItem.good.description}</div>
+                            <a class="cart-item-info__ctrl-btn c-pointer">Удалить</a>
                         </div>
-
-                        <div class="good-card__description">
-                            ${good.description}
-                        </div>
-
-                        <div class="good-card__rating">
-
-                        </div>
-
-                        <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn" data="${good.id}">В корзину</div>
+                        <div class="cart-item__sum">${cartItem.good.price * cartItem.quantity} ₽</div>
+                        <div class="cart-item__quantity">
+                            <input type="number" class="good-quantity" min="1" value="${cartItem.quantity}">
                         </div>
                     </div>
-
                 </c:forEach>
+
             </div>
 
-            <script>
-                let goodCards = document.querySelectorAll('.good-card');
-                let goodRatings = [];
+            <div class="cart-info ${cart.size() == 0 ? "hide" : ""}">
+                <div class="cart-info__checkout">
+                    <div class="register-btn c-pointer" style="text-transform: uppercase; text-align: center;border-radius: 5px; padding: 12px;">Перейти к оформлению</div>
+                    <div class="customer-info">Выбор способов доставки и оплаты происходит при оформлении заказа</div>
+                </div>
 
-                <%for(int i = 0; i < goodsDiscount.size(); i++) {
-                      int rating = Math.round(goodsDiscount.get(i).getRating());%>
-                goodRatings.push(<%= rating%>);
-                <%}%>
-
-                for (let i = 0; i < goodCards.length; i++){
-                    const ratingBlock = goodCards[i].children[5];
-                    let rating = goodRatings[i];
-
-                    for (let j = 0; j < rating; j++) {
-                        const starBackground = document.createElement('div');
-                        const starImgFilled = document.createElement('img');
-                        starBackground.classList.add('star-cont');
-                        starImgFilled.setAttribute('src', "${contextPath}/resources/static/star-fill.svg");
-                        starBackground.appendChild(starImgFilled);
-
-                        ratingBlock.appendChild(starBackground);
-                    }
-
-                    for (let j = rating; j < 5; j++){
-                        const starBackgroundTrans = document.createElement('div');
-                        const starImgBorder = document.createElement('img');
-                        starBackgroundTrans.classList.add('star-cont');
-                        starImgBorder.setAttribute('src', "${contextPath}/resources/static/star-transparent.svg");
-                        starBackgroundTrans.appendChild(starImgBorder);
-
-                        ratingBlock.appendChild(starBackgroundTrans);
-                    }
-                }
-            </script>
-
-            <div class="trigger-btn-large-cont" style="margin-top: 80px;">
-                <a href="/goods?categoryName=discount" class="view-more-btn trigger-btn-large">
-                    Показать еще
-                </a>
-            </div>
-        </div>
-
-        <!-- Hits of sales -->
-        <div class="good-hits content-section">
-            <div class="sector-header">
-                <a href="/goods?categoryName=hits">Хиты продаж</a>
-            </div>
-            <div class="goods-list">
-                <c:forEach var="good" items="${goodsHits}">
-                    <div class="good-card">
-                        <div class="good-card__to-bookmarks"></div>
-
-                        <a href="/goods/${good.id}" class="good-card__img">
-                            <img src="${good.goodImages.get(0).imageSrc}" alt="">
-                        </a>
-
-                        <div class="good-card__price">
-                            <div class="good-price">${good.price} <span>руб.</span></div>
-
-                            <c:if test="${good.priceBeforeDiscount != null}">
-                                <div class="good-discount-price">
-                                        ${ good.priceBeforeDiscount } <span>руб.</span>
-                                </div>
-                                <div class="good-discount-percent">-${ Math.round(100 * (1 - good.price / good.priceBeforeDiscount)) }%</div>
-                            </c:if>
-                        </div>
-
-                        <div class="good-card__name">
-                                ${good.name}
-                        </div>
-
-                        <div class="good-card__description">
-                                ${good.description}
-                        </div>
-
-                        <div class="good-card__rating">
-
-                        </div>
-
-                        <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn" data="${good.id}">В корзину</div>
-                        </div>
-                    </div>
-
-                    <script>
-                        goodCards = document.querySelector('.good-hits').children[1].children;
-                        goodRatings = [];
-
-                        <%for(int i = 0; i < goodsHits.size(); i++) {
-                              int rating = Math.round(goodsHits.get(i).getRating());%>
-                        goodRatings.push(<%= rating%>);
-                        <%}%>
-
-                        for (let i = 0; i < goodCards.length; i++){
-                            const ratingBlock = goodCards[i].children[5];
-                            let rating = goodRatings[i];
-
-                            for (let j = 0; j < rating; j++) {
-                                const starBackground = document.createElement('div');
-                                const starImgFilled = document.createElement('img');
-                                starBackground.classList.add('star-cont');
-                                starImgFilled.setAttribute('src', "${contextPath}/resources/static/star-fill.svg");
-                                starBackground.appendChild(starImgFilled);
-
-                                ratingBlock.appendChild(starBackground);
-                            }
-
-                            for (let j = rating; j < 5; j++){
-                                const starBackgroundTrans = document.createElement('div');
-                                const starImgBorder = document.createElement('img');
-                                starBackgroundTrans.classList.add('star-cont');
-                                starImgBorder.setAttribute('src', "${contextPath}/resources/static/star-transparent.svg");
-                                starBackgroundTrans.appendChild(starImgBorder);
-
-                                ratingBlock.appendChild(starBackgroundTrans);
-                            }
-                        }
-                    </script>
-                </c:forEach>
-            </div>
-        </div>
-
-        <!-- Block of recently viewes goods -->
-        <div class="recently-viewed content-section" style="margin-top: 70px">
-            <div class="sector-header">
-                <a href="">Вы смотрели</a>
-            </div>
-            <div class="goods-list">
-                <div class="good-card" data="${good.getId()}">
-                    <div class="good-card__to-bookmarks"></div>
-
-                    <div class="good-card__img">
-                        <img src="https://images.wbstatic.net/c246x328/new/25900000/25905681-1.jpg" alt="">
-                    </div>
-
-                    <div class="good-card__price">
-                        <div class="good-price">150 <span>руб.</span></div>
-                        <div class="good-discount-price">
-                            180 <span>руб.</span>
-                        </div>
-                        <div class="discount-percent">-17%</div>
-                    </div>
-
-                    <div class="good-card__description">
-                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti hic molestiae rerum?
-                    </div>
-
-                    <div class="good-card__rating">
-                        <div class="rating-star-cont">
-                            <img src="resources/static/star-fill.svg" alt="">
-                        </div>
-
-                        <div class="rating-star-cont">
-                            <img src="resources/static/star-fill.svg" alt="">
-                        </div>
-
-                        <div class="rating-star-cont">
-                            <img src="resources/static/star-fill.svg" alt="">
-                        </div>
-
-                        <div class="rating-star-cont">
-                            <img src="resources/static/star-fill.svg" alt="">
-                        </div>
-
-                        <div class="rating-star-cont">
-                            <img src="resources/static/star-transparent.svg" alt="">
-                        </div>
-                    </div>
-
-                    <div class="good-card-hover hide">
-                        <div class="add-to-cart-btn">В корзину</div>
-                    </div>
+                <div class="cart-info__cart-stats">
+                    <div>Общая стоимость</div>
+                    <div><span id="order-checkout-sum">1800</span> ₽</div>
                 </div>
             </div>
         </div>
 
-        <!-- Our advantages -->
-        <div class="advantages content-section" style="margin-top: 80px">
-            <div class="sector-header">
-                Широкий ассортимент и высокое качество
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Доставка и оплата без проблем
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Широкий ассортимент
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-            <div class="advantage">
-                <div class="advantage__header">
-                    Выгодный шоппинг
-                </div>
-                <div class="advantage__description">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Est corporis quod optio ullam iste, dicta neque soluta sunt dolorem deleniti consequatur illum labore ex, obcaecati voluptas fugiat, debitis eum nemo.
-                </div>
-            </div>
-        </div>
+        <div style="height: 200px;"></div>
     </main>
 
     <div class="page-overlay hide">
@@ -604,8 +375,9 @@
             </div>
         </div>
     </footer>
-
-    <script src="/resources/js/visual.js"></script>
-    <script src="/resources/js/cart-scripts.js"></script>
 </body>
+
+<!-- Connect js -->
+<script src="/resources/js/visual.js"></script>
+<script src="/resources/js/cart-scripts.js"></script>
 </html>

@@ -16,7 +16,10 @@ public class MainController {
     @Autowired
     private GoodsService goodsService;
 
-    @RequestMapping
+    /**
+     * @return home page
+     */
+    @RequestMapping("/")
     public String index(Model model){
         List<Good> goodsWithDiscount = (List<Good>) goodsService.getGoodsWithDiscount();
         List<Good> goodsHits = (List<Good>) goodsService.getHitGoods();
@@ -42,9 +45,5 @@ public class MainController {
     @RequestMapping("/notFound")
     public String pageNotFound(){
         return "404";
-    }
-
-    @RequestMapping("/test")
-    public void test(){
     }
 }

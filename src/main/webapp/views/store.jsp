@@ -1,6 +1,8 @@
-<jsp:useBean id="store" scope="request" type="com.WebMall.model.Store"/>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<jsp:useBean id="store" scope="request" type="com.WebMall.model.Store"/>
 <jsp:useBean id="goodsToShow" scope="request" type="java.util.List<com.WebMall.model.Good>"/>
 
 <!DOCTYPE html>
@@ -261,11 +263,11 @@
         <div class="catalog-content">
             <div class="catalog-sorter">
                 <span style="color: #a7a7a7; margin-right: 20px;">Сортировать по:</span>
-                <a href="/store/showStore?storeId=${store.id}&sortBy=popularity" class="sort-item sort-item-active">Популярности</a>
-                <a href="/store/showStore?storeId=${store.id}&sortBy=name" class="sort-item">Названию</a>
-                <a href="/store/showStore?storeId=${store.id}&sortBy=rating" class="sort-item">Рейтингу</a>
-                <a href="/store/showStore?storeId=${store.id}&sortBy=price" class="sort-item">Цене</a>
-                <a href="/store/showStore?storeId=${store.id}&sortBy=priceDiscount" class="sort-item">Скидке</a>
+                <a href="/store/showStore?storeId=${store.id}&sortBy=popularity" class="sort-item ${pageContext.request.getParameter("sortBy").equals("popularity") ? "sort-item-active" : ""}">Популярности</a>
+                <a href="/store/showStore?storeId=${store.id}&sortBy=name" class="sort-item ${pageContext.request.getParameter("sortBy").equals("name") ? "sort-item-active" : ""}">Названию</a>
+                <a href="/store/showStore?storeId=${store.id}&sortBy=rating" class="sort-item ${pageContext.request.getParameter("sortBy").equals("rating") ? "sort-item-active" : ""}">Рейтингу</a>
+                <a href="/store/showStore?storeId=${store.id}&sortBy=price" class="sort-item ${pageContext.request.getParameter("sortBy").equals("price") ? "sort-item-active" : ""}">Цене</a>
+                <a href="/store/showStore?storeId=${store.id}&sortBy=discount" class="sort-item ${pageContext.request.getParameter("sortBy").equals("priceDiscount") ? "sort-item-active" : ""}">Скидке</a>
             </div>
 
             <div class="goods-list content-section">
@@ -302,7 +304,7 @@
                         </div>
 
                         <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn">В корзину</div>
+                            <div class="add-to-cart-btn" data="${good.id}">В корзину</div>
                         </div>
                     </div>
                 </c:forEach>
@@ -453,4 +455,5 @@
 
 <!-- Connect js -->
 <script src="/resources/js/visual.js"></script>
+<script src="/resources/js/cart-scripts.js"></script>
 </html>

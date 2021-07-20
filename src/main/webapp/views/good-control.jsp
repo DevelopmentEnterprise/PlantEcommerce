@@ -2,6 +2,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <jsp:useBean id="good" scope="request" type="com.WebMall.model.Good"/>
 
@@ -187,7 +188,7 @@
 <main class="page-component">
     <h1>Добавить товар</h1>
 
-    <form:form method="POST" action="/store/${acceptUrl}" modelAttribute="good" enctype="multipart/form-data" id="control-form" >
+    <form:form method="POST" action="/store/${acceptUrl}" modelAttribute="good" enctype="multipart/form-data" id="control-form">
         <div class="good-params">
             <div class="params-group">
                 <h3>Информация о товаре</h3>
@@ -274,18 +275,29 @@
 
             </div>
 
-            <div class="params-group hide">
+            <div class="params-group ${good.goodOptions != null && good.goodOptions.size() > 0 ? "" : "hide"}">
                 <h3>Вариации</h3>
                 <table class="orders-list gen-table variations" cellspacing="0" cellpadding="0" style="min-width: 280px;">
                     <tr style="background-color: #e8e8e8">
                         <td style="width: 10%; font-size: 17px;">Название вариации</td>
                         <td style="width: 15%; font-size: 17px;">Цена</td>
+                        <td style="width: 15%; font-size: 17px;">Управлять</td>
                     </tr>
 
-<%--                    <tr>--%>
-<%--                        <td>Имя вариации</td>--%>
-<%--                        <td>180</td>--%>
-<%--                    </tr>--%>
+                    <c:forEach items="${good.goodOptions}" var="goodOption" varStatus="status">
+                        <tr data="${status.index}">
+                            <td>${goodOption.name}</td>
+                            <td>${goodOption.price}</td>
+                            <td class="good-control-btn c-pointer">
+
+                                <img src="${contextPath}/resources/static/ctrl-dots.svg" alt="Управлять">
+
+                                <div class="good-action-panel hide">
+                                    <div class="good-action-panel__btn delete-good-option">Удалить</a>
+                                </div>
+                            </td>
+                        </tr>
+                    </c:forEach>
                 </table>
             </div>
         </div>
@@ -414,11 +426,12 @@
     </div>
 </footer>
 
+<script src="/resources/js/visual.js"></script>
+<script src="/resources/js/store-scripts.js"></script>
+
 <script>
     document.querySelector('.custom-select').selectedIndex = ${good.goodCategories.get(0).id};
 </script>
 
-<script src="/resources/js/visual.js"></script>
-<script src="/resources/js/store-scripts.js"></script>
 </body>
 </html>

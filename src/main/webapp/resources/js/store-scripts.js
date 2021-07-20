@@ -9,6 +9,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const goodImageCont = document.querySelectorAll('.good-image-cont');
     const deleteGoodImage = document.querySelectorAll('.delete-good-image');
     const controlForm = document.querySelector('#control-form');
+    const deleteGoodOptionBtns = document.querySelectorAll('.delete-good-option');
+    const customSelect = document.querySelector('.custom-select');
+    const editOrderBtns = document.querySelectorAll('.edit-order-btn');
+    const storeEditPopup = document.querySelector('.store-edit-popup');
+    const pageOverlay = document.querySelector('.page-overlay');
+    const cancelOrderBtn = document.querySelector('.cancel-order-btn');
+    const editedOrderId = document.querySelector('#edited-order-id');
+    const saveStoreInfo = document.querySelector('.save-store-info');
+    const addCouponBtn = document.querySelector('.add-coupon-btn');
+    const addCouponPopup = document.querySelector('.coupon-add-popup');
+    const addCouponSubmit = document.querySelector('.add-coupon-btn-popup');
 
     //Make api calls to filter goods in store account
     goodTypes.forEach((el, index) => el.addEventListener('click',()=>{
@@ -28,8 +39,8 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     //Context menu open triggers set
     goodControlBtns.forEach(el => el.addEventListener('click',()=>{
-        const contextMenu = document.querySelector('.good-action-panel');
-        contextMenu.classList.toggle('hide');
+        const contextMenuBlock = el.parentElement.children[1];
+        contextMenuBlock.classList.toggle('hide');
     }));
 
     //Delete good btn clicked
@@ -62,12 +73,14 @@ document.addEventListener('DOMContentLoaded', ()=>{
         };
     });
 
+    //Add new variation button
     if (variationAdd != null)
         variationAdd.addEventListener('click', ()=>{
             document.querySelector('.variation-popup').classList.remove('hide');
             document.querySelector('.page-overlay').classList.remove('hide');
         });
 
+    //Add good option button
     if (goodOptionAdd != null)
         goodOptionAdd.addEventListener('click', ()=>{
             const goodItemsCtrl = document.querySelector('.good-options-ctrl');
@@ -79,23 +92,20 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const nameElem = document.createElement('input');
             nameElem.setAttribute('name', `goodOptions[${currentGoodItemId}].name`);
             nameElem.setAttribute('value', name.value);
+            nameElem.setAttribute('type', 'text');
             nameElem.classList.add('hide');
 
             const priceElem = document.createElement('input');
             priceElem.setAttribute('name', `goodOptions[${currentGoodItemId}].price`);
             priceElem.setAttribute('value', price.value);
+            priceElem.setAttribute('type', 'text');
             priceElem.classList.add('hide');
 
             goodItemsCtrl.appendChild(nameElem);
             goodItemsCtrl.appendChild(priceElem);
         });
 
-    // if (customSelect != null)
-    //     customSelect.addEventListener('change', ()=>{
-    //     let goodCategory = document.querySelector('.custom-select').options[document.querySelector('.custom-select').selectedIndex].value;
-    //     document.querySelector('#good-category-param').setAttribute('value', goodCategory);
-    // });
-
+    //Good card image selection on hover
     goodImageCont.forEach(el => el.addEventListener('mouseover', e =>{
         const closeBtn = e.target.parentElement.children[0];
         const overlay = e.target.parentElement.children[1];
@@ -103,7 +113,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
         closeBtn.classList.remove('hide');
         overlay.classList.remove('hide');
     }));
-
     goodImageCont.forEach(el => el.addEventListener('mouseout', e =>{
         const closeBtn = e.target.parentElement.children[0];
         const overlay = e.target.parentElement.children[1];
@@ -112,12 +121,13 @@ document.addEventListener('DOMContentLoaded', ()=>{
         overlay.classList.add('hide');
     }));
 
+    //Delete good image request sender
     deleteGoodImage.forEach(el => el.addEventListener('click', ()=>{
         const imageId = parseInt(el.parentElement.getAttribute('data'));
         if (isNaN(imageId)) return;
 
         const request = new XMLHttpRequest();
-        let url = 'http://localhost:8080/api/store/deleteGoodImageBy?goodImageId=' + imageId;
+        let url = 'http://localhost:8080/api/store/deleteGoodImageById?goodImageId=' + imageId;
         request.open('GET', url);
         request.send();
 
@@ -128,6 +138,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         };
     }));
 
+    //Form validation before sending to API
     if (controlForm!= null){
         controlForm.onsubmit = () =>{
 
@@ -135,14 +146,128 @@ document.addEventListener('DOMContentLoaded', ()=>{
             const goodNameInput = document.querySelector('#good-name');
             const goodDescInput = document.querySelector('#good-description');
 
-            // if (goodNameInput.value.trim() === "" || goodDescInput.value.trim() === "" || customSelect.selectedIndex !== -1){
-            //     return false;
-            // }
+            if (goodNameInput.value.trim() === "" || goodDescInput.value.trim() === "" || customSelect.selectedIndex === -1){
+                return false;
+            }
 
-            let goodCategory = document.querySelector('.custom-select').options[document.querySelector('.custom-select').selectedIndex].value;
+            let goodCategory = document.querySelector('.custom-select')
+                .options[document.querySelector('.custom-select').selectedIndex].value;
+
             document.querySelector('#good-category-param').setAttribute('value', goodCategory);
         }
     }
+
+    //Delete good option
+    if (deleteGoodOptionBtns)
+        deleteGoodOptionBtns.forEach(el => el.addEventListener('click', ()=>{
+            const dataAttr = el.parentElement.parentElement.parentElement.getAttribute('data');
+            const goodOptionNameElem = document.getElementsByName(`goodOptions[${dataAttr}].name`)[0];
+            const goodOptionPriceElem = document.getElementsByName(`goodOptions[${dataAttr}].price`)[0];
+            goodOptionNameElem.remove();
+            goodOptionPriceElem.remove();
+        }));
+
+    //Edit store btn
+    editOrderBtns.forEach(el => el.addEventListener('click', ()=>{
+        const orderId = el.parentElement.parentElement.parentElement.getAttribute('data');
+        editedOrderId.setAttribute('data', orderId);
+
+        storeEditPopup.classList.remove('hide');
+        pageOverlay.classList.remove('hide');
+    }));
+
+    if (cancelOrderBtn)
+        cancelOrderBtn.addEventListener('click', ()=>{
+            let confirmResult = confirm("Вы действительно хотите отменить заказ клиента?\n Это значительно снизит Ваш рейтинг и составит о Вас негативное впечатление.");
+            if(!confirmResult) return;
+
+            const orderId = editedOrderId.getAttribute('data');
+
+            storeEditPopup.classList.add('hide');
+            pageOverlay.classList.add('hide');
+
+            sendCancelOrderRequest(orderId);
+        });
+
+    if (saveStoreInfo)
+        saveStoreInfo.addEventListener('click', ()=>{
+            const orderId = editedOrderId.getAttribute('data');
+
+            storeEditPopup.classList.add('hide');
+            pageOverlay.classList.add('hide');
+
+            sendSaveOrderRequest(orderId);
+        });
+
+    if (addCouponBtn)
+        addCouponBtn.addEventListener('click', ()=>{
+            addCouponPopup.classList.remove('hide');
+            pageOverlay.classList.remove('hide');
+        });
+
+    if (addCouponSubmit)
+        addCouponSubmit.addEventListener('click', ()=>{
+            const couponName = document.querySelector('#coupon-name-input').value;
+            const couponPercent = parseInt(document.querySelector('#coupon-percent-input').value);
+            const couponExpiredDate = document.querySelector('#coupon-date-input').value;
+            const couponActive = document.querySelector('#coupon-active-input').checked;
+
+            //Validate created coupon
+            if (couponName === "" || couponExpiredDate === "" || isNaN(couponPercent))
+                return;
+
+            //Check coupon percent limit
+            if (couponPercent > 100){
+                alert("Величина процента скидки не может быть больше 100!");
+                return;
+            }
+
+            const requestBody = {
+                coupon: couponName,
+                expiredDate: couponExpiredDate,
+                discount: couponPercent,
+                isActive: couponActive
+            };
+
+            console.log(requestBody);
+
+            const request = new XMLHttpRequest();
+            const url = 'http://localhost:8080/api/store/addCoupon';
+
+            request.open('POST', url);
+            request.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+            request.send(JSON.stringify(requestBody));
+
+            request.onload = ()=>{
+                if (request.response == 1){
+                    let html = `<div class="coupon__preview">
+                            <span>
+                                Купон на ${requestBody.discount} %
+                            </span>
+                        </div>
+    
+                        <div class="coupon-info">
+                            <div>
+                                <div class="coupon-info__elem">Срок действия: активен до ${requestBody.expiredDate}</div>
+                                    <div class="coupon-info__elem">Магазин: ${document.querySelector('.store-name').textContent}</div>
+                                    <div class="coupon-info__elem">Статус купона: ${requestBody.isActive ? "Активен" : "Не активен"}</div>
+                                </div>
+                            </div>
+                        </div>`;
+
+                    const couponsBlock = document.querySelector('.coupons');
+                    const newCoupon = document.createElement('div');
+                    newCoupon.classList.add('coupon');
+                    newCoupon.innerHTML = html;
+                    couponsBlock.appendChild(newCoupon);
+
+                    addCouponPopup.classList.add('hide');
+                    pageOverlay.classList.add('hide');
+                }else{
+                    alert("Ошибка при создании купона. Пожалуйста, повторите попытку позже!");
+                }
+            }
+        });
 });
 
 const makeFilterRequest = (el, index) => {
@@ -154,7 +279,7 @@ const makeFilterRequest = (el, index) => {
     if(el.classList.contains("order-type")){
         url += "getOrdersByFilter?ordersFilter=";
         isGoodsRequest = false;
-        //TODO: Изменить вид отправки запроса с текстового вида на enum параметр
+
         switch (index) {
             case 1:
                 //Заказы, которые ожидают сборки
@@ -315,4 +440,34 @@ const dynamicSearch = event => {
 
     //Show goods in UI
     showStoreGoods(goodsFit);
+};
+
+const sendCancelOrderRequest = orderId =>{
+    //Check orderId is number and not null
+    if(orderId === '' || isNaN(orderId)) return;
+
+    let request = new XMLHttpRequest();
+    let url = 'http://localhost:8080/api/store/cancelOrder?orderId=' + orderId;
+    request.open('GET', url);
+    request.send();
+
+    request.onload = ()=>{
+        const response = request.response;
+        console.log(response);
+    };
+};
+
+const sendSaveOrderRequest = orderId =>{
+    //Check orderId is number and not null
+    if(orderId === '' || isNaN(orderId)) return;
+
+    const orderStatusInput = document.querySelector('#order-status-input')
+
+    let orderStatusId = orderStatusInput.selectedIndex;
+    if(orderStatusId === -1) return;
+
+    let request = new XMLHttpRequest();
+    let url = `http://localhost:8080/api/store/saveOrder?orderId=${orderId}&orderStatusId=${orderStatusId}`;
+    request.open('GET', url);
+    request.send();
 };

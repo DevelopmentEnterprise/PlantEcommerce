@@ -1,5 +1,5 @@
 document.addEventListener("DOMContentLoaded", ()=>{
-    document.querySelector(".menu-button").addEventListener("click", enableOverlayLayout);
+    document.querySelector(".menu-button").addEventListener("click", enableMainMenu);
 
     if (document.querySelector('#page-overlay-close') != null)
         document.querySelector('#page-overlay-close').addEventListener('click', disableOverlayLayout);
@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", ()=>{
     document.querySelector('.main-menu-close-btn').addEventListener('click', ()=>{
         document.querySelector('.main-menu').classList.add('hide');
         document.querySelector('.page-overlay').classList.add('hide');
+
+        if (document.querySelector('.coupon-add-popup') != null){
+            document.querySelector('.coupon-add-popup').classList.add('hide');
+        }
     });
 
     if (document.querySelector('.private-area-list') != null){
@@ -33,6 +37,7 @@ document.addEventListener("DOMContentLoaded", ()=>{
     if (document.querySelector('#variation-add') != null){
         document.querySelector('#variation-add').addEventListener('click', ()=>{
             document.querySelector('.variation-popup').classList.remove('hide');
+            document.querySelector('.page-overlay').classList.remove('hide');
         });
     }
 
@@ -50,13 +55,25 @@ const responsiveUI = () => {
     }
 };
 
-const enableOverlayLayout = () => {
+const enableMainMenu = () => {
     document.body.classList.add('scroll-stop');
     const menu = document.querySelector('.main-menu');
     const pageOverlay = document.querySelector('.page-overlay');
 
+    if (sessionStorage.getItem('goodsCategories'))
+        showGoodCategories(JSON.parse(sessionStorage.getItem('goodsCategories')));
+    else
+        getGoodCategories((response)=>{
+            sessionStorage.setItem('goodsCategories', JSON.stringify(response));
+            showGoodCategories(response);
+        });
+
     menu.classList.remove('hide');
     pageOverlay.classList.remove('hide');
+};
+
+const showGoodCategories = categoriesToShow =>{
+    //Here append blocks for good categories
 };
 
 const disableOverlayLayout = () => {
@@ -86,4 +103,16 @@ const controlPrivateAreaPanelsEx = (requestSender, panelToShowClass) => {
     document.querySelector(panelToShowClass).classList.remove('hide');
     requestSender.classList.add('list-item-active');
     requestSender.classList.remove('btn-underline');
+};
+
+const getGoodCategories = callback =>{
+    const request = new XMLHttpRequest();
+    let url = "http://localhost:8080/api/public/getCategories";
+    request.open('GET', url);
+    request.send();
+
+    request.onload = ()=>{
+        const response = JSON.parse(request.response);
+        callback(response);
+    };
 };

@@ -2,6 +2,7 @@ package com.WebMall.service.storeServices;
 
 import com.WebMall.model.*;
 import com.WebMall.model.enums.Status;
+import com.WebMall.repository.GoodOptionRepository;
 import com.WebMall.repository.GoodRepository;
 import com.WebMall.service.userServices.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +15,9 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,6 +31,9 @@ public class StoreServiceImpl implements StoreService {
 
     @Autowired
     private StoreService storeService;
+
+    @Autowired
+    private GoodOptionRepository goodOptionRepository;
 
     @Override
     public List<Good> filterStoreGoods(List<Good> goodsToFilter, String filterParam) {
@@ -119,12 +123,72 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public void saveGood(Good editedGood, Long goodId, List<MultipartFile> images, GoodCategory goodCategory) {
-        Good good = goodRepository.getById(goodId);
+        Optional<Good> foundGood = goodRepository.findById(goodId);
+        if (foundGood.isEmpty()) return;
+
+        Good good = foundGood.get();
         good.setName(editedGood.getName());
         good.setDescription(editedGood.getDescription());
         good.setPriceBeforeDiscount(editedGood.getPriceBeforeDiscount());
         good.setOnSale(editedGood.getOnSale());
-        good.setGoodCategories(Collections.singletonList(goodCategory));
+
+        List<GoodCategory> goodCategories = new ArrayList<>();
+        goodCategories.add(goodCategory);
+        good.setGoodCategories(goodCategories);
+
+        goodCategory.getGoods().add(good);
+
+        //Filter good options for null values
+        editedGood.setGoodOptions(editedGood.getGoodOptions()
+                .stream()
+                .filter(el -> el.getName() != null && el.getPrice() != null)
+                .collect(Collectors.toList()));
+
+        //Options that must be deleted
+        List<GoodOption> goodOptionsToDelete = new ArrayList<>();
+
+        //If user deleted all good options -> delete from DB
+        if (editedGood.getGoodOptions() == null || editedGood.getGoodOptions().size() == 0){
+            good.setGoodOptions(null);
+        }
+
+        //Remove existing good options
+        if (good.getGoodOptions() != null && good.getGoodOptions().size() != 0){
+            for(GoodOption goodOption : good.getGoodOptions()){
+                Optional<GoodOption> foundGoodOption = editedGood.getGoodOptions()
+                        .stream()
+                        .filter(el -> el.getName().equals(goodOption.getName()) && el.getPrice().equals(goodOption.getPrice()))
+                        .findFirst();
+
+                //Good option must be deleted
+                if (foundGoodOption.isEmpty()){
+                    goodOptionsToDelete.add(goodOption);
+                }
+            }
+
+            good.getGoodOptions().removeAll(goodOptionsToDelete);
+        }
+
+        //Add new good options if no such exist
+        if (editedGood.getGoodOptions() != null && editedGood.getGoodOptions().size() != 0){
+            List<GoodOption> goodOptions = new ArrayList<>();
+
+            for (int i = 0; i < editedGood.getGoodOptions().size(); i++) {
+                GoodOption goodOption = editedGood.getGoodOptions().get(i);
+
+                Optional<GoodOption> existingGoodOption = good.getGoodOptions()
+                        .stream()
+                        .filter(el -> el.getName().equals(goodOption.getName()) && el.getPrice().equals(goodOption.getPrice()))
+                        .limit(1).findFirst();
+
+                //If no elems with such data found -> add new good option
+                if (existingGoodOption.isEmpty()){
+                    goodOption.setGood(good);
+                    goodOptions.add(goodOption);
+                }
+            }
+            good.getGoodOptions().addAll(goodOptions);
+        }
 
         //New images were uploaded
         if (images != null){
@@ -148,5 +212,9 @@ public class StoreServiceImpl implements StoreService {
         }
 
         goodRepository.save(good);
+
+        for(GoodOption goodOption : goodOptionsToDelete){
+            goodOptionRepository.delete(goodOption);
+        }
     }
 }

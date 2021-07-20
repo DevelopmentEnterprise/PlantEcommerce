@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <jsp:useBean id="goodsToShow" scope="request" type="java.util.List<com.WebMall.model.Good>"/>
 
 <!DOCTYPE html>
@@ -268,7 +269,7 @@
 
                 <div class="goods-list content-section">
                     <c:forEach var="good" items="${goodsToShow}">
-                        <div class="good-card" data="${good.id}">
+                        <div class="good-card">
                             <div class="good-card__to-bookmarks"></div>
 
                             <a href="/goods/${good.id}" class="good-card__img">
@@ -296,7 +297,7 @@
                             </div>
 
                             <div class="good-card-hover hide">
-                                <div class="add-to-cart-btn">В корзину</div>
+                                <div class="add-to-cart-btn" data="${good.id}">В корзину</div>
                             </div>
                         </div>
                     </c:forEach>
@@ -446,4 +447,5 @@
 
 <!-- Connect js -->
 <script src="/resources/js/visual.js"></script>
+<script src="/resources/js/cart-scripts.js"></script>
 </html>

@@ -246,10 +246,11 @@
                     <td style="width: 50%; font-size: 17px;">Состав</td>
                     <td style="width: 10%; font-size: 17px;">Стоимость</td>
                     <td style="width: 15%; font-size: 17px;">Дата заказа</td>
+                    <td style="width: 15%; font-size: 17px;">Управлять</td>
                 </tr>
 
                 <c:forEach var="order" items="${store.orders}">
-                    <tr>
+                    <tr data="${store.id}">
                         <td>${order.id}</td>
                         <td>${order.status}</td>
                         <td>
@@ -259,6 +260,14 @@
                         </td>
                         <td>${order.sum} руб.</td>
                         <td>${order.orderDate.toString().substring(0, 10).replace("-", " ")}</td>
+
+                        <td class="good-control-btn c-pointer">
+                            <img src="${contextPath}/resources/static/ctrl-dots.svg" alt="Управлять">
+
+                            <div class="good-action-panel hide">
+                                <div class="good-action-panel__btn edit-order-btn">Редактировать</div>
+                            </div>
+                        </td>
                     </tr>
                 </c:forEach>
             </table>
@@ -266,8 +275,12 @@
 
         <div class="private-area-content my-coupons hide">
             <h2>Мои купоны</h2>
-            <div class="coupons">
 
+            <div class="trigger-btn-large add-coupon-btn">
+                Добавить купон
+            </div>
+
+            <div class="coupons">
                 <c:forEach var="coupon" items="${store.coupons}">
                     <div class="coupon">
                         <div class="coupon__preview">
@@ -278,7 +291,7 @@
 
                         <div class="coupon-info">
                             <div>
-                                <div class="coupon-info__elem">Срок действия: активен до ${coupon.expiredDate}</div>
+                                <div class="coupon-info__elem">Срок действия: активен до ${coupon.expiredDate.toString().substring(0, 10)}</div>
                                 <div class="coupon-info__elem">Магазин: ${store.name}</div>
                                 <div class="coupon-info__elem">Статус купона: ${coupon.active ? "Активен" : "Не активен"}</div>
                             </div>
@@ -404,6 +417,49 @@
 
 <div class="page-overlay hide">
     <div class="main-menu-close-btn"></div>
+</div>
+
+<div class="store-edit-popup hide">
+    <h3 style="margin-top: 0;">Редактирование заказа</h3>
+
+    <span id="edited-order-id" class="hide" data=""></span>
+
+    <div class="select" style="margin-bottom: 45px; max-width: unset;">
+        <select class="custom-select" id="order-status-input" style="font-size: 18px">
+            <option value="NEW">Новый</option>
+            <option value="ASSEMBLY">Сборка</option>
+            <option value="DELIVER">Доставка</option>
+            <option value="COMPLETED">Выполнен</option>
+        </select>
+    </div>
+
+    <!-- Сделать проверку, чтобы продавец случайно не откакзал клиенту -->
+    <div class="cancel-order-btn trigger-btn-large">Отменить заказ</div>
+
+    <div class="save-store-info trigger-btn-large">Сохранить</div>
+</div>
+
+<div class="coupon-add-popup hide">
+    <h3 style="margin-top: 0;">Добавление купона</h3>
+
+    <div style="margin-bottom: 15px;">
+        <input type="text" id="coupon-name-input" class="form-input" placeholder="Купон">
+    </div>
+
+    <div>
+        <input type="number" id="coupon-percent-input" placeholder="Процент скидки" max="100" maxlength="3" class="form-input">
+    </div>
+
+    <div style="margin: 15px 0">
+        <input type="date" id="coupon-date-input" class="form-input">
+    </div>
+
+    <div>
+        <input type="checkbox" id="coupon-active-input">
+        <label for="coupon-active-input">Купон активен</label>
+    </div>
+
+    <div class="trigger-btn-dark c-pointer add-coupon-btn-popup" style="margin-top: 15px">Добавить</div>
 </div>
 
 <footer>
