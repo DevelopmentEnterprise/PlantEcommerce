@@ -3,6 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<jsp:useBean id="user" scope="request" type="com.WebMall.model.User"/>
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -258,16 +261,16 @@
                         <div style="display: flex; justify-content: space-between;">
                             <div style="border: 1px solid #ccc; padding: 5px 12px; border-radius: 5px">
                                 Количество заказов:
-                                <div style="text-align: center;">${ordersCount}</div>
+                                <div style="text-align: center;">${user.ordersCount}</div>
                             </div>
                             <div style="border: 1px solid #ccc; padding: 5px 12px; border-radius: 5px">
                                 Количество купленных товаров:
-                                <div style="text-align: center;">${goodsBoughtCount}</div>
+                                <div style="text-align: center;">${user.goodsBoughtCount}</div>
                             </div>
 
                             <div style="border: 1px solid #ccc; padding: 5px 12px; border-radius: 5px">
                                 Количество бонусов на счету:
-                                <div style="text-align: center;">${bonusesCount}</div>
+                                <div style="text-align: center;">${user.bonusesCount}</div>
                             </div>
                         </div>
                     </div>
@@ -277,98 +280,75 @@
             <div class="private-area-content my-cart hide">
                 <h2>Моя корзина</h2>
                 <div class="goods-list content-section">
-                    <div class="good-card">
-                        <div class="good-card__to-bookmarks"></div>
 
-                        <div class="good-card__img">
-                            <img src="https://images.wbstatic.net/c246x328/new/25900000/25905681-1.jpg" alt="">
-                        </div>
+                    <c:forEach items="${user.cart}" var="cartItem">
+                        <div class="good-card">
+                            <div class="good-card__to-bookmarks"></div>
 
-                        <div class="good-card__price">
-                            <div class="good-price">150 <span>руб.</span></div>
-                            <div class="good-priceDiscount-price">
-                                180 <span>руб.</span>
-                            </div>
-                            <div class="priceDiscount-percent">-17%</div>
-                        </div>
+                            <a href="/goods/${cartItem.good.id}" class="good-card__img">
+                                <img src="${cartItem.good.goodImages.get(0).imageSrc}" alt="">
+                            </a>
 
-                        <div class="good-card__description">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti hic molestiae rerum?
-                        </div>
+                            <div class="good-card__price">
+                                <div class="good-price">${cartItem.good.price} <span>руб.</span></div>
 
-                        <div class="good-card__rating">
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
+                                <c:if test="${cartItem.good.priceBeforeDiscount != null}">
+                                    <div class="good-discount-price">
+                                            ${ cartItem.good.priceBeforeDiscount } <span>руб.</span>
+                                    </div>
+                                    <div class="discount-percent">-${ Math.round(100 * (1 - cartItem.good.price / cartItem.good.priceBeforeDiscount)) }%</div>
+                                </c:if>
                             </div>
 
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
+                            <div class="good-card__name">
+                                    ${cartItem.good.name}
                             </div>
 
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
+                            <div class="good-card__description">
+                                    ${cartItem.good.description}
                             </div>
 
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
-                            </div>
+                            <div class="good-card__rating">
 
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-transparent.svg" alt="">
                             </div>
                         </div>
+                    </c:forEach>
 
-                        <div class="good-card-hover hide">
-                            <!-- <div class="add-to-cart-btn">В корзину</div> -->
-                        </div>
-                    </div>
+                    <script>
+                        const goodCards = document.querySelectorAll('.good-card');
+                        let goodRatings = [];
 
-                    <div class="good-card">
-                        <div class="good-card__to-bookmarks"></div>
+                        <%for(int i = 0; i < user.getCart().size(); i++) {
+                              int rating = Math.round(user.getCart().get(i).getGood().getRating());%>
+                            goodRatings.push(<%= rating%>);
+                        <%}%>
 
-                        <div class="good-card__img">
-                            <img src="https://images.wbstatic.net/c246x328/new/25900000/25905681-1.jpg" alt="">
-                        </div>
+                        for (let i = 0; i < goodCards.length; i++){
+                            const ratingBlock = goodCards[i].children[5];
+                            let rating = goodRatings[i];
 
-                        <div class="good-card__price">
-                            <div class="good-price">150 <span>руб.</span></div>
-                            <div class="good-priceDiscount-price">
-                                180 <span>руб.</span>
-                            </div>
-                            <div class="priceDiscount-percent">-17%</div>
-                        </div>
+                            for (let j = 0; j < rating; j++) {
+                                const starBackground = document.createElement('div');
+                                const starImgFilled = document.createElement('img');
+                                starBackground.classList.add('star-cont');
+                                starImgFilled.setAttribute('src', "${contextPath}/resources/static/star-fill.svg");
+                                starBackground.appendChild(starImgFilled);
 
-                        <div class="good-card__description">
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Deleniti hic molestiae rerum?
-                        </div>
+                                ratingBlock.appendChild(starBackground);
+                            }
 
-                        <div class="good-card__rating">
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
-                            </div>
+                            for (let j = rating; j < 5; j++){
+                                const starBackgroundTrans = document.createElement('div');
+                                const starImgBorder = document.createElement('img');
+                                starBackgroundTrans.classList.add('star-cont');
+                                starImgBorder.setAttribute('src', "${contextPath}/resources/static/star-transparent.svg");
+                                starBackgroundTrans.appendChild(starImgBorder);
 
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
-                            </div>
+                                ratingBlock.appendChild(starBackgroundTrans);
+                            }
+                        }
+                    </script>
 
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
-                            </div>
-
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-fill.svg" alt="">
-                            </div>
-
-                            <div class="rating-star-cont">
-                                <img src="resources/static/star-transparent.svg" alt="">
-                            </div>
-                        </div>
-
-                        <div class="good-card-hover hide">
-                            <div class="add-to-cart-btn">В корзину</div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
 
@@ -376,15 +356,15 @@
                 <h2>Мои заказы</h2>
                 <div class="orders-list">
 
-                    <c:forEach var="order" items="${userOrders}">
+                    <c:forEach var="order" items="${user.orders}">
                         <div class="order content-block">
                             <div class="order-info">
                                 <div>
-                                    <h3 style="margin: 0;">Заказ от ${order.getOrderDate().toString()}</h3>
-                                    <div class="order-number">${order.getId()}</div>
+                                    <h3 style="margin: 0;">Заказ от ${order.orderDate.toString()}</h3>
+                                    <div class="order-number">${order.id}</div>
                                 </div>
 
-                                <div class="order-sum">${order.getSum()} <span>руб.</span></div>
+                                <div class="order-sum">${order.sum} <span>руб.</span></div>
                             </div>
                             <div class="goods-previews" style="display: flex; flex-wrap: wrap; margin-top: 20px;">
                                 <div class="good-preview" style="border: 1px solid red; width: 80px; height: 80px;">
@@ -400,17 +380,17 @@
                 <h2>Мои купоны</h2>
                 <div class="coupons">
 
-                    <c:forEach var="coupon" items="${userCoupons}">
+                    <c:forEach var="coupon" items="${user.coupons}">
                         <div class="coupon">
                             <div class="coupon__preview">
                                 <span>
-                                    Купон на ${coupon.getDiscount()}% скидку
+                                    Купон на ${coupon.discount}% скидку
                                 </span>
                             </div>
                             <div class="coupon-info">
                                 <div>
-                                    <div class="coupon-info__elem">Срок действия: ${coupon.getExpiredDate()}</div>
-                                    <div class="coupon-info__elem">Магазин: ${coupon.getStore().getName()}</div>
+                                    <div class="coupon-info__elem">Срок действия: ${coupon.expiredDate}</div>
+                                    <div class="coupon-info__elem">Магазин: ${coupon.store.name}</div>
                                 </div>
                             </div>
                         </div>
@@ -426,7 +406,7 @@
                     <form action="" method="post">
                         <div class="edit-profile-input-cont">
                             <span class="edit-profile-param">Имя</span>
-                            <input type="text" name="firstName">
+                            <input type="text" name="firstName" value="${user.firstName}">
                             <span class="edit-profile-param-icon">
                                 <img src="static/pencil.svg" alt="">
                             </span>
@@ -434,7 +414,7 @@
 
                         <div class="edit-profile-input-cont">
                             <span class="edit-profile-param">Фамилия</span>
-                            <input type="text" name="lastName">
+                            <input type="text" name="lastName" value="${user.lastName}">
                             <span class="edit-profile-param-icon">
                                 <img src="static/pencil.svg" alt="">
                             </span>
@@ -442,7 +422,7 @@
 
                         <div class="edit-profile-input-cont">
                             <span class="edit-profile-param">Email</span>
-                            <input type="text" name="Email">
+                            <input type="text" name="Email" value="${user.email}">
                             <span class="edit-profile-param-icon">
                                 <img src="static/pencil.svg" alt="">
                             </span>
@@ -450,7 +430,7 @@
 
                         <div class="edit-profile-input-cont">
                             <span class="edit-profile-param">Телефон</span>
-                            <input type="text" name="Tel">
+                            <input type="text" name="Tel" value="${user.tel}">
                             <span class="edit-profile-param-icon">
                                 <img src="static/pencil.svg" alt="">
                             </span>
@@ -458,7 +438,7 @@
 
                         <div class="edit-profile-input-cont">
                             <span class="edit-profile-param">Страна</span>
-                            <input type="text" name="country">
+                            <input type="text" name="country" value="${user.country}">
                             <span class="edit-profile-param-icon">
                                 <img src="static/pencil.svg" alt="">
                             </span>
@@ -466,7 +446,7 @@
 
                         <div class="edit-profile-input-cont">
                             <span class="edit-profile-param">Город</span>
-                            <input type="text" name="city">
+                            <input type="text" name="city" value="${user.city}">
                             <span class="edit-profile-param-icon">
                                 <img src="static/pencil.svg" alt="">
                             </span>

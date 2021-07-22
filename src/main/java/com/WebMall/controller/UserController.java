@@ -1,7 +1,9 @@
 package com.WebMall.controller;
 
+import com.WebMall.model.CartItem;
 import com.WebMall.model.LoginUser;
 import com.WebMall.model.User;
+import com.WebMall.service.AccessDeniedException;
 import com.WebMall.service.SecurityService;
 import com.WebMall.service.userServices.UserService;
 import com.WebMall.validation.UserValidator;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * -- Created by Killer_hacker999 --
@@ -77,35 +80,24 @@ public class UserController {
 
     @GetMapping("/privatedetails")
     public String privateArea(Model model){
-        User currentUser = userService.getLoggedUser();
-        if (currentUser == null) return "404";
+        if (!userService.checkAuthUser())
+            throw new AccessDeniedException();
 
-        //TODO: При переходе на эту страницу сделать автозаполнение информации профиля (имя, фамилия...)
-        //TODO: Заполнеть список заказов фотографиями товаров
-        //TODO: Если пользователь - продавец, то активировать кнопку перехода в кабинет продавца
-
-        model.addAttribute("ordersCount", currentUser.getOrdersCount());
-        model.addAttribute("goodsBoughtCount", currentUser.getGoodsBoughtCount());
-        model.addAttribute("bonusesCount", currentUser.getBonusesCount());
-        model.addAttribute("userOrders", currentUser.getOrders());
-        model.addAttribute("userCoupons", currentUser.getCoupons());
+        User loggedUser = userService.getLoggedUser();
+        model.addAttribute("user", loggedUser);
 
         return "private-area";
     }
 
     @RequestMapping("/cart")
     public String showUserCart(Model model){
-//        boolean isUserAuthenticated = userService.checkAuthUser();
-//        if (!isUserAuthenticated){
-//            model.addAttribute("cart", new ArrayList<>());
-//            return "cart";
-//        }
-//
-//        List<CartItem> userCart = userService.getLoggedUser().getCart();
+        if (!userService.checkAuthUser()){
+            model.addAttribute("cart", new ArrayList<>());
+            return "cart";
+        }
 
-//        List<CartItem> userCart = userService.findByUsername("iluha1401.ig@gmail.com").getCart();
-
-        model.addAttribute("cart", new ArrayList<>());
+        List<CartItem> userCart = userService.getLoggedUser().getCart();
+        model.addAttribute("cart", userCart);
         return "cart";
     }
 
