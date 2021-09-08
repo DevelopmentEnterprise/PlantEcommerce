@@ -165,13 +165,9 @@
   font-size: 16px;
 }
 
-.edit-profile-panel img {
+.edit-profile-param-icon img {
   width: 20px;
   height: 20px;
-}
-
-.edit-profile-panel .edit-profile-param-icon {
-  cursor: pointer;
 }
 
 @media (max-width: 600px) {

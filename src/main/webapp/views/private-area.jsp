@@ -225,6 +225,10 @@
                     <div class="private-area-list__item"><span class="btn-underline private-area-link" id="cart-page-link">Моя корзина</span></div>
                     <div class="private-area-list__item"><span class="btn-underline private-area-link" id="orders-page-link">Мои заказы</span></div>
                     <div class="private-area-list__item"><span class="btn-underline private-area-link" id="coupons-page-link">Мои купоны</span></div>
+
+<%--                    <c:if test='${SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser" && }'>--%>
+<%--                        <div class="private-area-list__item"><span class="btn-underline private-area-link" id="coupons-page-link">Мои купоны</span></div>--%>
+<%--                    </c:if>--%>
                 </div>
 
             </div>

@@ -744,6 +744,33 @@
   cursor: pointer;
 }
 
+.param-input {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  background-color: #eeeeee;
+  padding: 8px;
+  margin-bottom: 15px;
+}
+
+.param-input:last-child {
+  margin-bottom: 0;
+}
+
+.param-input input {
+  width: 100%;
+  border: none;
+  outline: none;
+  margin-left: 8px;
+  height: 25px;
+  margin-right: 8px;
+  background-color: #eeeeee;
+  font-size: 16px;
+}
+
 .good-card {
   width: 261px;
   border-radius: 5px;

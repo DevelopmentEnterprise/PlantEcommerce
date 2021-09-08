@@ -262,7 +262,7 @@
                         <td>${order.orderDate.toString().substring(0, 10).replace("-", " ")}</td>
 
                         <td class="good-control-btn c-pointer">
-                            <img src="${contextPath}/resources/static/ctrl-dots.svg" alt="Управлять">
+                            <img src="/resources/static/ctrl-dots.svg" alt="Управлять">
 
                             <div class="good-action-panel hide">
                                 <div class="good-action-panel__btn edit-order-btn">Редактировать</div>

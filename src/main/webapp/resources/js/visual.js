@@ -22,6 +22,9 @@ document.addEventListener("DOMContentLoaded", ()=>{
         if (document.querySelector('.coupon-add-popup') != null){
             document.querySelector('.coupon-add-popup').classList.add('hide');
         }
+
+        if (document.querySelector('.store-edit-popup') != null)
+            document.querySelector('.store-edit-popup').classList.add('hide');
     });
 
     if (document.querySelector('.private-area-list') != null){

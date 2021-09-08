@@ -25,7 +25,7 @@ public class Good {
     private Integer priceBeforeDiscount;
 
     @NotNull
-    private Boolean isOnSale;
+    private Boolean onSale;
 
     private Integer ordersCount;
 
@@ -93,20 +93,20 @@ public class Good {
         this.priceBeforeDiscount = priceBeforeDiscount;
     }
 
-    public Boolean getOnSale() {
-        return isOnSale;
-    }
-
-    public void setOnSale(Boolean onSale) {
-        isOnSale = onSale;
-    }
-
     public Integer getOrdersCount() {
         return ordersCount;
     }
 
     public void setOrdersCount(Integer ordersCount) {
         this.ordersCount = ordersCount;
+    }
+
+    public Boolean getOnSale() {
+        return onSale;
+    }
+
+    public void setOnSale(Boolean onSale) {
+        this.onSale = onSale;
     }
 
     public Integer getWishesCount() {

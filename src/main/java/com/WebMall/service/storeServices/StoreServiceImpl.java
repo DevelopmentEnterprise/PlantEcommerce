@@ -99,9 +99,10 @@ public class StoreServiceImpl implements StoreService {
         Store userStore = loggedUser.getStore();
 
         for (int i = 0; i < images.size(); i++) {
-            if (images.get(i).getOriginalFilename().equals("")) continue;
+            if (Objects.equals(images.get(i).getOriginalFilename(), "")) continue;
             GoodImage img = new GoodImage();
-            img.setImageSrc("/работа/PlantEcommerce/WebMall/src/main/webapp/resources/images/" + images.get(i).getOriginalFilename());
+            img.setImageSrc("/работа/PlantEcommerce/WebMall/src/main/webapp/resources/images/" +
+                    images.get(i).getOriginalFilename());
             img.setGood(createdGood);
             goodImages.add(img);
         }
@@ -111,7 +112,11 @@ public class StoreServiceImpl implements StoreService {
         categories.add(goodCategory);
         createdGood.setGoodCategories(categories);
 
+        //Set images
         createdGood.setGoodImages(goodImages);
+
+        //Make rating 0
+        createdGood.setRating(0F);
 
         //Save good
         createdGood.setStore(userStore);

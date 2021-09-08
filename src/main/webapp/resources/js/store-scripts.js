@@ -1,8 +1,10 @@
+let goodControlBtns =  document.querySelectorAll('.good-control-btn img');
+let editOrderBtns = document.querySelectorAll('.edit-order-btn');
+
 document.addEventListener('DOMContentLoaded', ()=>{
     const goodTypes = document.querySelectorAll('.good-type');
     const orderTypes = document.querySelectorAll('.order-type');
     const goodSearcherInput = document.querySelector('.goods-searcher__input');
-    const goodControlBtns =  document.querySelectorAll('.good-control-btn img');
     const deleteStoreGood = document.querySelector('.delete-store-good');
     const variationAdd = document.querySelector('#variation-add');
     const goodOptionAdd = document.querySelector('#good-option-add');
@@ -11,7 +13,6 @@ document.addEventListener('DOMContentLoaded', ()=>{
     const controlForm = document.querySelector('#control-form');
     const deleteGoodOptionBtns = document.querySelectorAll('.delete-good-option');
     const customSelect = document.querySelector('.custom-select');
-    const editOrderBtns = document.querySelectorAll('.edit-order-btn');
     const storeEditPopup = document.querySelector('.store-edit-popup');
     const pageOverlay = document.querySelector('.page-overlay');
     const cancelOrderBtn = document.querySelector('.cancel-order-btn');
@@ -23,13 +24,18 @@ document.addEventListener('DOMContentLoaded', ()=>{
 
     //Make api calls to filter goods in store account
     goodTypes.forEach((el, index) => el.addEventListener('click',()=>{
-            makeFilterRequest(el, index);
-        }));
+        //Make clicked elem selected
+        goodTypes.forEach(e => e.classList.remove('order-type-selected'))
+        el.classList.add('order-type-selected');
+        makeFilterRequest(el, index);
+    }));
 
     //Make api calls to filter orders in store account
     orderTypes.forEach((el, index) => el.addEventListener('click', ()=>{
-            makeFilterRequest(el, index);
-        }));
+        orderTypes.forEach(e => e.classList.remove('order-type-selected'));
+        el.classList.add('order-type-selected');
+        makeFilterRequest(el, index);
+    }));
 
     //Set trigger for dynamic search
     if (goodSearcherInput != null)
@@ -38,10 +44,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         });
 
     //Context menu open triggers set
-    goodControlBtns.forEach(el => el.addEventListener('click',()=>{
-        const contextMenuBlock = el.parentElement.children[1];
-        contextMenuBlock.classList.toggle('hide');
-    }));
+    contextMenuToggle(goodControlBtns);
 
     //Delete good btn clicked
     if (deleteStoreGood != null)
@@ -168,13 +171,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
         }));
 
     //Edit store btn
-    editOrderBtns.forEach(el => el.addEventListener('click', ()=>{
-        const orderId = el.parentElement.parentElement.parentElement.getAttribute('data');
-        editedOrderId.setAttribute('data', orderId);
-
-        storeEditPopup.classList.remove('hide');
-        pageOverlay.classList.remove('hide');
-    }));
+    refreshEditOrderBtnsEvents();
 
     if (cancelOrderBtn)
         cancelOrderBtn.addEventListener('click', ()=>{
@@ -270,6 +267,26 @@ document.addEventListener('DOMContentLoaded', ()=>{
         });
 });
 
+const refreshEditOrderBtnsEvents = ()=>{
+    editOrderBtns = document.querySelectorAll('.edit-order-btn');
+
+    editOrderBtns.forEach(el => el.addEventListener('click', ()=>{
+        const orderId = el.parentElement.parentElement.parentElement.getAttribute('data');
+        document.querySelector('#edited-order-id').setAttribute('data', orderId);
+
+        document.querySelector('.store-edit-popup').classList.remove('hide');
+        document.querySelector('.page-overlay').classList.remove('hide');
+        el.parentElement.classList.add('hide');
+    }));
+};
+
+const contextMenuToggle = items =>{
+    items.forEach(el => el.addEventListener('click',()=>{
+        const contextMenuBlock = el.parentElement.children[1];
+        contextMenuBlock.classList.toggle('hide');
+    }));
+};
+
 const makeFilterRequest = (el, index) => {
     let request = new XMLHttpRequest();
     let url = "http://localhost:8080/api/store/";
@@ -321,10 +338,16 @@ const makeFilterRequest = (el, index) => {
             let jsonResponse = JSON.parse(request.response);
             sessionStorage.setItem("storeGoods", JSON.stringify(jsonResponse));
 
-            if (isGoodsRequest)
+            if (isGoodsRequest) {
                 showStoreGoods(jsonResponse);
-            else
+                goodControlBtns = document.querySelectorAll('.good-control-btn img');
+                contextMenuToggle(goodControlBtns);
+            }else {
                 showStoreOrders(jsonResponse);
+                goodControlBtns = document.querySelectorAll('.good-control-btn img');
+                contextMenuToggle(goodControlBtns);
+                refreshEditOrderBtnsEvents();
+            }
         }
     };
 };
@@ -356,7 +379,15 @@ const showStoreGoods = goodsToShow =>{
                 html += `<td></td>`;
             }
 
-            html += ` <td class="good-control-btn c-pointer"><img src="${window.location.pathname}/resources/static/ctrl-dots.svg" alt="Управлять"></td>
+            html += `
+                <td class="good-control-btn c-pointer">
+                    <img src="/resources/static/ctrl-dots.svg" alt="Управлять">
+                    
+                    <div class="good-action-panel hide">
+                        <a href="/store/editStoreGood?goodId=${goodsToShow[i].id}" class="good-action-panel__btn edit-store-good">Редактировать</a>
+                        <a href="" class="good-action-panel__btn delete-store-good">Удалить</a>
+                    </div>
+                </td>
             </tr>`;
 
         elem.innerHTML = html;
@@ -376,9 +407,9 @@ const showStoreOrders = ordersToShow =>{
     for (let i = 0; i < ordersToShow.length; i++) {
         let elem = document.createElement("tr");
         const order = ordersToShow[i];
+        elem.setAttribute('data', order.id.toString());
 
-        html += `
-            <tr>
+        html = `
                 <td>
                     ${order.id}
                 </td>
@@ -404,7 +435,13 @@ const showStoreOrders = ordersToShow =>{
                     ${order.orderDate.substr(0, 10).replace('-', ' ')}
                 </td>
                 
-            </tr>
+                <td class="good-control-btn c-pointer">
+                    <img src="/resources/static/ctrl-dots.svg" alt="Управлять">
+
+                    <div class="good-action-panel hide">
+                        <div class="good-action-panel__btn edit-order-btn">Редактировать</div>
+                    </div>
+                </td>
         `;
 
         elem.innerHTML = html;
@@ -470,4 +507,7 @@ const sendSaveOrderRequest = orderId =>{
     let url = `http://localhost:8080/api/store/saveOrder?orderId=${orderId}&orderStatusId=${orderStatusId}`;
     request.open('GET', url);
     request.send();
+
+    //Refresh page after sending request
+    location.reload();
 };

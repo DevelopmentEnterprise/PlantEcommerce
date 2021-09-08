@@ -186,7 +186,7 @@
 </div>
 
 <main class="page-component">
-    <h1>Добавить товар</h1>
+    <h1>${acceptUrl.equals("createStoreGood") ? "Добавить" : "Редактировать"} товар</h1>
 
     <form:form method="POST" action="/store/${acceptUrl}" modelAttribute="good" enctype="multipart/form-data" id="control-form">
         <div class="good-params">
@@ -239,6 +239,13 @@
                                        style="resize: none; font-size: 14px; width: 250px; height: 100px;"
                                        maxlength="200" />
                     </spring:bind>
+                </div>
+                <div class="good-param">
+<%--                    <spring:bind path="isOnSale">--%>
+<%--                        <form:label path="isOnSale" cssClass="good-param__name">Цена до скидки</form:label>--%>
+<%--                        <form:input path="isOnSale" cssClass="good-param__input no-border-input" id="good-onSale" />--%>
+<%--                    </spring:bind>--%>
+                    <form:checkbox path="onSale" label="На продаже" />
                 </div>
 
                 <div class="trigger-btn-large add-good-btn" id="variation-add">Добавить вариацию</div>

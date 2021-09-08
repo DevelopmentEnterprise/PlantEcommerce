@@ -73,15 +73,14 @@ public class StoreController {
      */
     @RequestMapping("/myStore")
     public String showStoreArea(Model model){
-//        User loggedUser = userService.getLoggedUser();
-//        if (loggedUser == null){
-//            throw new AccessDeniedException();
-//        }
-//
-//        Store requestedStore = loggedUser.getStore();
-        Store requestedStore = storeRepository.findById(1L).get();
-        model.addAttribute("store", requestedStore);
+        User loggedUser = userService.getLoggedUser();
+        if (loggedUser == null){
+            throw new AccessDeniedException();
+        }
 
+        Store requestedStore = loggedUser.getStore();
+
+        model.addAttribute("store", requestedStore);
         return "my-store";
     }
 
@@ -98,8 +97,8 @@ public class StoreController {
         }
 
         Store userStore = loggedUser.getStore();
-        userStore.setName(params.get("store-name").get(0));
-        userStore.setDescription(params.get("store-description").get(0));
+        userStore.setName(params.getFirst("store-name"));
+        userStore.setDescription(params.getFirst("store-description"));
 
         userService.save(loggedUser);
     }
@@ -118,8 +117,8 @@ public class StoreController {
 
         Store userStore = loggedUser.getStore();
         StoreAddress storeAddress = userStore.getStoreAddress();
-        storeAddress.setCity(addressParams.get("store-city").get(0));
-        storeAddress.setStreet(addressParams.get("store-street").get(0));
+        storeAddress.setCity(addressParams.getFirst("store-city"));
+        storeAddress.setStreet(addressParams.getFirst("store-street"));
 
         userService.save(loggedUser);
     }
@@ -144,7 +143,6 @@ public class StoreController {
                                   Model model){
         //Check for authorization
         if (!userService.checkAuthUser()) throw new AccessDeniedException();
-        createdGood.setOnSale(true);
 
         GoodCategory selectedCategory = categoryRepository.findByName(goodCategory);
 
