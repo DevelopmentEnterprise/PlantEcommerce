@@ -224,6 +224,10 @@
         <div class="footer-col__header">Партнерам</div>
 
         <div class="footer-col__item">
+            <a href="/store/myStore">Вход в личный кабинет</a>
+        </div>
+
+        <div class="footer-col__item">
             <a href="">Продавайте у нас</a>
         </div>
         <div class="footer-col__item">
