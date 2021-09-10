@@ -243,6 +243,11 @@
 </div>
 
 <main class="page-component">
+
+    <div class="store-banner">
+        <img src="${store.bannerImageSrc}" alt="${store.name}">
+    </div>
+
     <div class="catalog-title-wrap">
         <h1>${store.name}</h1>
     </div>

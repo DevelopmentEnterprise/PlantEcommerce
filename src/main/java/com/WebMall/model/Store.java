@@ -21,6 +21,8 @@ public class Store {
 
     private String description;
 
+    private String bannerImageSrc;
+
     @OneToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
@@ -71,6 +73,14 @@ public class Store {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getBannerImageSrc() {
+        return bannerImageSrc;
+    }
+
+    public void setBannerImageSrc(String bannerImageSrc) {
+        this.bannerImageSrc = bannerImageSrc;
     }
 
     public User getUser() {

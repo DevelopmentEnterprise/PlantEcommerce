@@ -196,4 +196,27 @@ public class StoreController {
 
         return "my-store";
     }
+
+    @RequestMapping(value = "/addBannerImage", method = RequestMethod.POST)
+    public String addBannerImage(@RequestParam("banner-image") MultipartFile bannerImage){
+        //Check for authorization
+        User loggedUser = userService.getLoggedUser();
+        if (loggedUser == null) throw new AccessDeniedException();
+
+        List<MultipartFile> dataForUpload = new ArrayList<>();
+        dataForUpload.add(bannerImage);
+
+        //Save uploaded file on server
+        storeService.uploadGoodImages(dataForUpload);
+
+        //Make changes in store model
+        Store currentStore = loggedUser.getStore();
+        currentStore.setBannerImageSrc("/работа/PlantEcommerce/WebMall/src/main/webapp/resources/images/"
+                + bannerImage.getOriginalFilename());
+
+        //Save changes to database
+        storeRepository.save(currentStore);
+
+        return "redirect:/store/myStore";
+    }
 }

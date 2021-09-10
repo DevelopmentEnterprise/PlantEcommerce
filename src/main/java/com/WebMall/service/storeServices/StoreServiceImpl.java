@@ -30,9 +30,6 @@ public class StoreServiceImpl implements StoreService {
     private GoodRepository goodRepository;
 
     @Autowired
-    private StoreService storeService;
-
-    @Autowired
     private GoodOptionRepository goodOptionRepository;
 
     @Override
@@ -123,7 +120,7 @@ public class StoreServiceImpl implements StoreService {
         goodRepository.save(createdGood);
 
         //Upload image to server folder
-        storeService.uploadGoodImages(images);
+        uploadGoodImages(images);
     }
 
     @Override

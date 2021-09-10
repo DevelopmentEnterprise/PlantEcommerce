@@ -361,17 +361,33 @@
                         <div class="order content-block">
                             <div class="order-info">
                                 <div>
-                                    <h3 style="margin: 0;">Заказ от ${order.orderDate.toString()}</h3>
-                                    <div class="order-number">${order.id}</div>
+                                    <h3 style="margin: 0;">Заказ от ${order.orderDate.toString().replace("00:00:00.0", "")}</h3>
+                                    <div class="order-number">Заказ № ${order.id}</div>
                                 </div>
 
                                 <div class="order-sum">${order.sum} <span>руб.</span></div>
                             </div>
-                            <div class="goods-previews" style="display: flex; flex-wrap: wrap; margin-top: 20px;">
-                                <div class="good-preview" style="border: 1px solid red; width: 80px; height: 80px;">
-                                    <img src="" alt="">
-                                </div>
-                            </div>
+                            <table class="custom-table" style="margin-top: 20px;">
+                                <tr class="custom-table__header">
+                                    <td>Название</td>
+                                    <td>Описание</td>
+                                    <td>Тип</td>
+                                    <td>Цена</td>
+                                    <td>Количество</td>
+                                    <td>Стоимость</td>
+                                </tr>
+
+                                <c:forEach var="orderGood" items="${order.orderGoods}">
+                                    <tr>
+                                        <td>${orderGood.name}</td>
+                                        <td>${orderGood.description}</td>
+                                        <td>${orderGood.optionName}</td>
+                                        <td>${orderGood.price} ₽</td>
+                                        <td>${orderGood.quantity}</td>
+                                        <td>${orderGood.price * orderGood.quantity}</td>
+                                    </tr>
+                                </c:forEach>
+                            </table>
                         </div>
                     </c:forEach>
                 </div>

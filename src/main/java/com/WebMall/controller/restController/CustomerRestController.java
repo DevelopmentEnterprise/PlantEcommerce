@@ -86,6 +86,7 @@ public class CustomerRestController {
             CartItem newCartItem = new CartItem();
             newCartItem.setQuantity(quantity);
             newCartItem.setGood(requestedGood.get());
+            newCartItem.setCustomer(loggedUser);
 
             customerCart.add(newCartItem);
         }else{

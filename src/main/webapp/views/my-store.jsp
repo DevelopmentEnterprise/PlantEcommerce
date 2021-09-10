@@ -171,7 +171,7 @@
                 <div class="profile-avatar">
                     <img src="${contextPath}/resources/static/store-icon.svg" alt="">
                 </div>
-                <div class="store-name">Название магазина</div>
+                <div class="store-name">${store.name}</div>
                 <div style="margin-bottom: 20px;">
                     <div><span class="private-area-link c-pointer" id="account-page-link">Редактировать информацию<br /> о магазине</span></div>
                 </div>
@@ -411,6 +411,22 @@
                     </div>
                 </form:form>
             </div>
+
+            <div class="edit-profile-panel">
+                <!-- Добавление баннера магазина -->
+                <h3 style="margin-top: 0;">Медиа магазина</h3>
+
+                <form:form action="/store/addBannerImage" method="POST" enctype="multipart/form-data">
+                    <div class="edit-profile-input-cont">
+                        <span class="edit-profile-param profile-edit-input">Баннер магазина</span>
+                        <input type="file" class="file-area" name="banner-image">
+                    </div>
+
+                    <div>
+                        <button type="submit" class="register-btn" style="margin-top: 25px; width: 150px;">Сохранить</button>
+                    </div>
+                </form:form>
+            </div>
         </div>
     </div>
 </main>
@@ -461,6 +477,16 @@
 
     <div class="trigger-btn-dark c-pointer add-coupon-btn-popup" style="margin-top: 15px">Добавить</div>
 </div>
+
+<style>
+    .file-area{
+        border: 1px dashed #ccc;
+        text-align: center;
+        padding: 45px;
+        border-radius: 5px;
+        margin-top: 25px;
+    }
+</style>
 
 <footer>
     <div class="footer-col">
