@@ -1,7 +1,8 @@
 package com.WebMall.model;
 
 import com.WebMall.model.enums.DeliveryType;
-import com.WebMall.model.enums.Status;
+import com.WebMall.model.enums.OrderStatus;
+import com.WebMall.model.enums.PaymentType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.sun.istack.NotNull;
 
@@ -18,7 +19,7 @@ public class Order {
     private Long id;
 
     @NotNull
-    private Status status;
+    private OrderStatus status;
 
     @NotNull
     private Date orderDate;
@@ -28,6 +29,9 @@ public class Order {
     @NotNull
     private DeliveryType deliveryType;
 
+    @NotNull
+    private PaymentType paymentType;
+
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
@@ -36,10 +40,9 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderGood> orderGoods;
 
-    @ManyToOne
-    @JoinColumn(name = "store_id")
+    @ManyToMany
     @JsonIgnore
-    private Store store;
+    private List<Store> stores;
 
     public Long getId() {
         return id;
@@ -49,11 +52,11 @@ public class Order {
         this.id = id;
     }
 
-    public Status getStatus() {
+    public OrderStatus getStatus() {
         return status;
     }
 
-    public void setStatus(Status status) {
+    public void setStatus(OrderStatus status) {
         this.status = status;
     }
 
@@ -81,6 +84,14 @@ public class Order {
         this.deliveryType = deliveryType;
     }
 
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
     public User getUser() {
         return user;
     }
@@ -97,11 +108,11 @@ public class Order {
         this.orderGoods = orderGoods;
     }
 
-    public Store getStore() {
-        return store;
+    public List<Store> getStores() {
+        return stores;
     }
 
-    public void setStore(Store store) {
-        this.store = store;
+    public void setStores(List<Store> stores) {
+        this.stores = stores;
     }
 }

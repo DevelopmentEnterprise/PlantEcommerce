@@ -27,7 +27,7 @@ public class Store {
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "store")
+    @ManyToMany(mappedBy = "stores")
     private List<Order> orders;
 
     @OneToOne

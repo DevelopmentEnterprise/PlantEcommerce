@@ -1,6 +1,6 @@
 package com.WebMall.model.enums;
 
-public enum Status {
+public enum OrderStatus {
     NEW,
     ASSEMBLY,
     DELIVER,

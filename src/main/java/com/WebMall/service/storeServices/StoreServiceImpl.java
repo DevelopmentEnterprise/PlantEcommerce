@@ -1,7 +1,7 @@
 package com.WebMall.service.storeServices;
 
 import com.WebMall.model.*;
-import com.WebMall.model.enums.Status;
+import com.WebMall.model.enums.OrderStatus;
 import com.WebMall.repository.GoodOptionRepository;
 import com.WebMall.repository.GoodRepository;
 import com.WebMall.service.userServices.UserService;
@@ -46,17 +46,17 @@ public class StoreServiceImpl implements StoreService {
         return switch (filterParam){
             case "assembly" -> ordersToFilter
                     .stream()
-                    .filter(el -> el.getStatus() == Status.ASSEMBLY)
+                    .filter(el -> el.getStatus() == OrderStatus.ASSEMBLY)
                     .collect(Collectors.toList());
 
             case "deliver" -> ordersToFilter
                     .stream()
-                    .filter(el -> el.getStatus() == Status.DELIVER)
+                    .filter(el -> el.getStatus() == OrderStatus.DELIVER)
                     .collect(Collectors.toList());
 
             case "completed" -> ordersToFilter
                     .stream()
-                    .filter(el -> el.getStatus() == Status.COMPLETED)
+                    .filter(el -> el.getStatus() == OrderStatus.COMPLETED)
                     .collect(Collectors.toList());
 
             default -> ordersToFilter;

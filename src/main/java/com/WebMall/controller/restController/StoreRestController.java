@@ -1,7 +1,7 @@
 package com.WebMall.controller.restController;
 
 import com.WebMall.model.*;
-import com.WebMall.model.enums.Status;
+import com.WebMall.model.enums.OrderStatus;
 import com.WebMall.repository.CouponRepository;
 import com.WebMall.repository.GoodImageRepository;
 import com.WebMall.repository.OrderRepository;
@@ -143,7 +143,7 @@ public class StoreRestController {
         if (requestedOrder.isEmpty()) throw new NotFoundException();
 
         Order currentOrder = requestedOrder.get();
-        currentOrder.setStatus(Status.CANCELED);
+        currentOrder.setStatus(OrderStatus.CANCELED);
         orderRepository.save(currentOrder);
 
         return 1;
@@ -174,7 +174,7 @@ public class StoreRestController {
         if (requestedOrder.isEmpty()) throw new NotFoundException();
 
         Order currentOrder = requestedOrder.get();
-        currentOrder.setStatus(Status.values()[orderStatusId]);
+        currentOrder.setStatus(OrderStatus.values()[orderStatusId]);
         orderRepository.save(currentOrder);
 
         return 1;

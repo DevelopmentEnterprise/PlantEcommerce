@@ -14,6 +14,8 @@ public class CartItem {
 
     private Integer quantity;
 
+    private String optionName;
+
     @ManyToOne
     @JsonIgnore
     private User customer;
@@ -36,6 +38,14 @@ public class CartItem {
 
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
+    }
+
+    public String getOptionName() {
+        return optionName;
+    }
+
+    public void setOptionName(String optionName) {
+        this.optionName = optionName;
     }
 
     public User getCustomer() {

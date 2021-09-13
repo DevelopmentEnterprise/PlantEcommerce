@@ -80,7 +80,15 @@ public class StoreController {
 
         Store requestedStore = loggedUser.getStore();
 
+        List<Order> storeOrders = new ArrayList<>(loggedUser.getOrders());
+
+        //Filter order goods that are not from current store (TODO: Needs testing)
+        for (Order order : storeOrders){
+            order.getOrderGoods().removeIf(el -> !el.getOrder().getStores().contains(requestedStore));
+        }
+
         model.addAttribute("store", requestedStore);
+        model.addAttribute("orders", storeOrders);
         return "my-store";
     }
 

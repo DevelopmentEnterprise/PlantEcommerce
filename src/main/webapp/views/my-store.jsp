@@ -1,8 +1,10 @@
-<jsp:useBean id="store" scope="request" type="com.WebMall.model.Store"/>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<jsp:useBean id="store" scope="request" type="com.WebMall.model.Store"/>
+<jsp:useBean id="orders" scope="request" type="java.util.List<com.WebMall.model.Order>"/>
 
 <!DOCTYPE html>
 <html lang="ru">
@@ -249,7 +251,7 @@
                     <td style="width: 15%; font-size: 17px;">Управлять</td>
                 </tr>
 
-                <c:forEach var="order" items="${store.orders}">
+                <c:forEach var="order" items="${orders}">
                     <tr data="${store.id}">
                         <td>${order.id}</td>
                         <td>${order.status}</td>
