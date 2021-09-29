@@ -18,11 +18,11 @@ public interface GoodsService {
      */
     Collection<Good> getHitGoods();
     Collection<Good> getRecommendedGoods();
+    Collection<Good> getGoodsByUserInput(String categoryName);
 
     Good getGoodById(Long goodId);
     void deleteGood(Good good);
     List<Good> getGoodsByRequestParams(String categoryName, Integer pageNum, String sortBy);
-    Collection<Good> getGoodsByCategory(String categoryName);
     int getPagersCountRequired(int allGoodsCount);
     SortType getSortType(String sortType);
     List<Good> sortGoodsByParam(List<Good> goodsToSort, String sortTypeName);

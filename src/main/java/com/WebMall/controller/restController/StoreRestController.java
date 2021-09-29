@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * -- Made by Killer_hacker999 --
+ * -- Made by Ilya-009 --
  * API for frontend calls to dynamic data load (no page refresh)
  */
 @CrossOrigin(origins = "*")

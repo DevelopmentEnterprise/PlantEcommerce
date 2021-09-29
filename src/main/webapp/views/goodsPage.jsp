@@ -258,16 +258,22 @@
             </div> -->
 
             <div class="catalog-content">
-                <div class="catalog-sorter">
-                    <span style="color: #a7a7a7; margin-right: 20px;">Сортировать по:</span>
-                    <a href="/goods?categoryName=${categoryName}&sortBy=popularity" class="sort-item ${pageContext.request.getParameter("sortBy").equals("popularity") ? "sort-item-active" : ""}">Популярности</a>
-                    <a href="/goods?categoryName=${categoryName}&sortBy=name" class="sort-item ${pageContext.request.getParameter("sortBy").equals("name") ? "sort-item-active" : ""}">Названию</a>
-                    <a href="/goods?categoryName=${categoryName}&sortBy=rating" class="sort-item ${pageContext.request.getParameter("sortBy").equals("rating") ? "sort-item-active" : ""}">Рейтингу</a>
-                    <a href="/goods?categoryName=${categoryName}&sortBy=price" class="sort-item ${pageContext.request.getParameter("sortBy").equals("price") ? "sort-item-active" : ""}">Цене</a>
-                    <a href="/goods?categoryName=${categoryName}&sortBy=priceDiscount" class="sort-item ${pageContext.request.getParameter("sortBy").equals("priceDiscount") ? "sort-item-active" : ""}">Скидке</a>
-                </div>
+                <c:if test="${goodsToShow.size() != 0}">
+                    <div class="catalog-sorter">
+                        <span style="color: #a7a7a7; margin-right: 20px;">Сортировать по:</span>
+                        <a href="/goods?categoryName=${categoryName}&sortBy=popularity" class="sort-item ${pageContext.request.getParameter("sortBy").equals("popularity") ? "sort-item-active" : ""}">Популярности</a>
+                        <a href="/goods?categoryName=${categoryName}&sortBy=name" class="sort-item ${pageContext.request.getParameter("sortBy").equals("name") ? "sort-item-active" : ""}">Названию</a>
+                        <a href="/goods?categoryName=${categoryName}&sortBy=rating" class="sort-item ${pageContext.request.getParameter("sortBy").equals("rating") ? "sort-item-active" : ""}">Рейтингу</a>
+                        <a href="/goods?categoryName=${categoryName}&sortBy=price" class="sort-item ${pageContext.request.getParameter("sortBy").equals("price") ? "sort-item-active" : ""}">Цене</a>
+                        <a href="/goods?categoryName=${categoryName}&sortBy=priceDiscount" class="sort-item ${pageContext.request.getParameter("sortBy").equals("priceDiscount") ? "sort-item-active" : ""}">Скидке</a>
+                    </div>
+                </c:if>
 
                 <div class="goods-list content-section">
+                    <c:if test="${goodsToShow.size() == 0}">
+                        <h2 style="text-align: center">Ничего не найдено по вашему запросу</h2>
+                    </c:if>
+
                     <c:forEach var="good" items="${goodsToShow}">
                         <div class="good-card">
                             <div class="good-card__to-bookmarks"></div>

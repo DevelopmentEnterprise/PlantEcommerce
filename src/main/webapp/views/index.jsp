@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page contentType="text/html;charset=UTF-8" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <jsp:useBean id="goodsDiscount" scope="request" type="java.util.List<com.WebMall.model.Good>"/>
@@ -68,7 +69,12 @@
                         <div>Везде</div>
                         <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg" class=""><path d="M11.8 6.6l-3 4a1 1 0 01-1.6 0l-3-4A1 1 0 015 5h6a1 1 0 01.8 1.6z" fill="currentColor"></path></svg>
                     </div>
+                    <form:form method="get" action="/goods" id="search-form">
+                        <input type="hidden" name="categoryName" id="user-input-field">
+                    </form:form>
+
                     <input type="text" id="search-input" placeholder="Искать на Озон">
+
                     <div class="search-btn">
                         <svg width="24" height="24" fill="none" xmlns="http://www.w3.org/2000/svg" type="submit" aria-label="Поиск" class=""><path d="M9.996 17.991a7.996 7.996 0 117.995-7.995 1 1 0 11-2 0 5.996 5.996 0 10-1.756 4.24l.707-.708 7.115 7.115a1 1 0 11-1.414 1.414l-5.745-5.745a7.967 7.967 0 01-4.902 1.68z" fill="currentColor"></path></svg>
                     </div>
@@ -611,5 +617,6 @@
 
     <script src="/resources/js/visual.js"></script>
     <script src="/resources/js/cart-scripts.js"></script>
+    <script src="/resources/js/search-scripts.js"></script>
 </body>
 </html>

@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * -- Created by Killer_hacker999 --
+ * -- Created by Ilya-009 --
  * Represents all functionality for operating sellers' stores logic
  */
 @Controller

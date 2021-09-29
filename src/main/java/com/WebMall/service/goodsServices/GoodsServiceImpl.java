@@ -1,9 +1,7 @@
 package com.WebMall.service.goodsServices;
 
 import com.WebMall.model.Good;
-import com.WebMall.model.GoodCategory;
 import com.WebMall.model.enums.SortType;
-import com.WebMall.repository.CategoryRepository;
 import com.WebMall.repository.GoodRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,9 +14,6 @@ public class GoodsServiceImpl implements GoodsService {
 
     @Autowired
     private GoodRepository goodRepository;
-
-    @Autowired
-    private CategoryRepository categoryRepository;
 
     @Override
     public int getPagersCountRequired(int allGoodsCount) {
@@ -53,7 +48,7 @@ public class GoodsServiceImpl implements GoodsService {
                 }
 
                 default -> {
-                    List<Good> foundGoods = (List<Good>) getGoodsByCategory(categoryName);
+                    List<Good> foundGoods = (List<Good>) getGoodsByUserInput(categoryName);
                     goodsToShow = limitGoodsByPageNum(foundGoods, pageNum);
                 }
             }
@@ -71,11 +66,33 @@ public class GoodsServiceImpl implements GoodsService {
     }
 
     @Override
-    public Collection<Good> getGoodsByCategory(String categoryName) {
-        if (categoryName == null || categoryName.length() == 0) return null;
+    public Collection<Good> getGoodsByUserInput(String userInput) {
+        if (userInput == null || userInput.length() == 0) return null;
 
-        GoodCategory requiredCategory = categoryRepository.findByName(categoryName);
-        return requiredCategory.getGoods();
+        List<Good> foundGoods = new ArrayList<>();
+
+        //Search by good name
+        List<Good> allGoods = goodRepository.findAll();
+
+        //Add goods with name match
+        foundGoods.addAll(allGoods
+                .stream()
+                .filter(el -> el.getName().toLowerCase().contains(userInput.toLowerCase()))
+                .collect(Collectors.toList()));
+
+        //Add goods with description match
+        foundGoods.addAll(allGoods
+                .stream()
+                .filter(el -> el.getDescription().toLowerCase().contains(userInput.toLowerCase()))
+                .collect(Collectors.toList()));
+
+        //Remove duplicates from found goods
+        foundGoods = foundGoods
+                .stream()
+                .distinct()
+                .collect(Collectors.toList());
+
+        return foundGoods;
     }
 
     @Override

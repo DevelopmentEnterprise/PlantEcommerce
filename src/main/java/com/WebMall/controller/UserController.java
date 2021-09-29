@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * -- Created by Killer_hacker999 --
+ * -- Created by Ilya-009 --
  *
  * Represents all functionality for operating user logic:
  * authentication, registration...

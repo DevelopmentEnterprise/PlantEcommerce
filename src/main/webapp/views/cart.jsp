@@ -271,7 +271,7 @@
 
             <div class="cart-info ${cart.size() == 0 ? "hide" : ""}">
                 <div class="cart-info__checkout">
-                    <div class="register-btn c-pointer" style="text-transform: uppercase; text-align: center;border-radius: 5px; padding: 12px;">Перейти к оформлению</div>
+                    <a href="/checkout" class="register-btn c-pointer" style="text-transform: uppercase; text-align: center;border-radius: 5px; padding: 12px;">Перейти к оформлению</a>
                     <div class="customer-info">Выбор способов доставки и оплаты происходит при оформлении заказа</div>
                 </div>
 

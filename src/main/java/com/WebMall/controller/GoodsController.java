@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 /**
- * -- Created by Killer_hacker999 --
+ * -- Created by Ilya-009 --
  * Represents all functionality for operating goods logic
  */
 @Controller
@@ -43,7 +43,7 @@ public class GoodsController {
             case "discount"  -> "Товары по скидке";
             case "hits" -> "Хиты продаж";
             case "recommended" -> "Рекомендуемые";
-            default -> categoryName;
+            default -> "Результаты по запросу " + categoryName;
         };
 
         model.addAttribute("categoryUI", categoryUI);
@@ -64,7 +64,6 @@ public class GoodsController {
         }
 
         model.addAttribute("good", foundGood);
-
         return "good-page";
     }
 }
