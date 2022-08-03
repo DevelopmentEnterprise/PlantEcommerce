@@ -252,7 +252,7 @@
                 </tr>
 
                 <c:forEach var="order" items="${orders}">
-                    <tr data="${store.id}">
+                    <tr data="${order.id}">
                         <td>${order.id}</td>
                         <td>${order.status}</td>
                         <td>

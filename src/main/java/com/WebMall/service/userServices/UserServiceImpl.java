@@ -36,7 +36,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean save(User user) {
-        if (user == null) return false;
+        if (user == null){
+            return false;
+        }
 
         userRepository.save(user);
         return true;
@@ -49,16 +51,14 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkAuthUser() {
-        if (SecurityContextHolder.getContext().getAuthentication().getPrincipal() == "anonymousUser"){
-            return false;
-        }
-
-        return true;
+        return SecurityContextHolder.getContext().getAuthentication().getPrincipal() != "anonymousUser";
     }
 
     @Override
     public User getLoggedUser() {
-        if (!checkAuthUser()) return null;
+        if (!checkAuthUser()){
+            return null;
+        }
 
         String email = ((UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getUsername();
         return userRepository.findByEmail(email);
@@ -66,8 +66,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean checkForRole(String roleName) {
-        if (!roleName.contains("ROLE_"))
+        if (!roleName.contains("ROLE_")){
             roleName = "ROLE_" + roleName;
+        }
 
         User loggedUser = getLoggedUser();
         List<Role> loggedUserRoles = loggedUser.getRoles();

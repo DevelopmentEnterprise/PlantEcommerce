@@ -14,10 +14,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,7 +31,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public List<Good> filterStoreGoods(List<Good> goodsToFilter, String filterParam) {
-        return switch (filterParam){
+        return switch (filterParam) {
             case "sale" -> goodsToFilter.stream().filter(Good::getOnSale).collect(Collectors.toList());
             case "hidden" -> goodsToFilter.stream().filter(el -> !el.getOnSale()).collect(Collectors.toList());
             default -> goodsToFilter;
@@ -43,7 +40,7 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public List<Order> filterStoreOrders(List<Order> ordersToFilter, String filterParam) {
-        return switch (filterParam){
+        return switch (filterParam) {
             case "assembly" -> ordersToFilter
                     .stream()
                     .filter(el -> el.getStatus() == OrderStatus.ASSEMBLY)
@@ -68,7 +65,7 @@ public class StoreServiceImpl implements StoreService {
         String uploadedPath = "/работа/PlantEcommerce/WebMall/src/main/webapp/resources/images/";
         Path uploadPath = Paths.get(uploadedPath);
 
-        if (!Files.exists(uploadPath)){
+        if (!Files.exists(uploadPath)) {
             try {
                 Files.createDirectories(uploadPath);
             } catch (IOException e) {
@@ -76,7 +73,7 @@ public class StoreServiceImpl implements StoreService {
             }
         }
 
-        for(MultipartFile image : images){
+        for (MultipartFile image : images) {
             Path filePath = uploadPath.resolve(Objects.requireNonNull(image.getOriginalFilename()));
             InputStream inputStream;
 
@@ -95,18 +92,19 @@ public class StoreServiceImpl implements StoreService {
         List<GoodImage> goodImages = new ArrayList<>();
         Store userStore = loggedUser.getStore();
 
-        for (int i = 0; i < images.size(); i++) {
-            if (Objects.equals(images.get(i).getOriginalFilename(), "")) continue;
+        for (MultipartFile image : images) {
+            if (Objects.equals(image.getOriginalFilename(), "")) {
+                continue;
+            }
+
             GoodImage img = new GoodImage();
-            img.setImageSrc("/работа/PlantEcommerce/WebMall/src/main/webapp/resources/images/" +
-                    images.get(i).getOriginalFilename());
+            img.setImageSrc("/работа/PlantEcommerce/WebMall/src/main/webapp/resources/images/" + image.getOriginalFilename());
             img.setGood(createdGood);
             goodImages.add(img);
         }
 
         //Set category
-        List<GoodCategory> categories = new ArrayList<>();
-        categories.add(goodCategory);
+        List<GoodCategory> categories = Arrays.asList(goodCategory);
         createdGood.setGoodCategories(categories);
 
         //Set images
@@ -150,20 +148,20 @@ public class StoreServiceImpl implements StoreService {
         List<GoodOption> goodOptionsToDelete = new ArrayList<>();
 
         //If user deleted all good options -> delete from DB
-        if (editedGood.getGoodOptions() == null || editedGood.getGoodOptions().size() == 0){
+        if (editedGood.getGoodOptions() == null || editedGood.getGoodOptions().size() == 0) {
             good.setGoodOptions(null);
         }
 
         //Remove existing good options
-        if (good.getGoodOptions() != null && good.getGoodOptions().size() != 0){
-            for(GoodOption goodOption : good.getGoodOptions()){
+        if (good.getGoodOptions() != null && good.getGoodOptions().size() != 0) {
+            for (GoodOption goodOption : good.getGoodOptions()) {
                 Optional<GoodOption> foundGoodOption = editedGood.getGoodOptions()
                         .stream()
                         .filter(el -> el.getName().equals(goodOption.getName()) && el.getPrice().equals(goodOption.getPrice()))
                         .findFirst();
 
                 //Good option must be deleted
-                if (foundGoodOption.isEmpty()){
+                if (foundGoodOption.isEmpty()) {
                     goodOptionsToDelete.add(goodOption);
                 }
             }
@@ -172,7 +170,7 @@ public class StoreServiceImpl implements StoreService {
         }
 
         //Add new good options if no such exist
-        if (editedGood.getGoodOptions() != null && editedGood.getGoodOptions().size() != 0){
+        if (editedGood.getGoodOptions() != null && editedGood.getGoodOptions().size() != 0) {
             List<GoodOption> goodOptions = new ArrayList<>();
 
             for (int i = 0; i < editedGood.getGoodOptions().size(); i++) {
@@ -183,8 +181,8 @@ public class StoreServiceImpl implements StoreService {
                         .filter(el -> el.getName().equals(goodOption.getName()) && el.getPrice().equals(goodOption.getPrice()))
                         .limit(1).findFirst();
 
-                //If no elems with such data found -> add new good option
-                if (existingGoodOption.isEmpty()){
+                //If no elements with such data found -> add new good option
+                if (existingGoodOption.isEmpty()) {
                     goodOption.setGood(good);
                     goodOptions.add(goodOption);
                 }
@@ -193,18 +191,21 @@ public class StoreServiceImpl implements StoreService {
         }
 
         //New images were uploaded
-        if (images != null){
+        if (images != null) {
             List<GoodImage> goodImages = new ArrayList<>();
 
-            for (int i = 0; i < images.size(); i++) {
-                if (images.get(i).getOriginalFilename().equals("")) continue;
+            for (MultipartFile image : images) {
+                if (Objects.equals(image.getOriginalFilename(), "")) {
+                    continue;
+                }
+
                 GoodImage goodImage = new GoodImage();
-                goodImage.setImageSrc(images.get(i).getOriginalFilename());
+                goodImage.setImageSrc(image.getOriginalFilename());
                 goodImage.setGood(good);
                 goodImages.add(goodImage);
             }
 
-            if (goodImages.size() != 0){
+            if (goodImages.size() != 0) {
                 List<GoodImage> existingImages = good.getGoodImages();
 
                 //Add new good images
@@ -215,7 +216,7 @@ public class StoreServiceImpl implements StoreService {
 
         goodRepository.save(good);
 
-        for(GoodOption goodOption : goodOptionsToDelete){
+        for (GoodOption goodOption : goodOptionsToDelete) {
             goodOptionRepository.delete(goodOption);
         }
     }
